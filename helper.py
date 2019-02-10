@@ -15,6 +15,11 @@ def send_message(receiver, text):
 	return message
 
 def process_response(sender, text):
-	print(sender)
+	print(phone_to_int(sender))
 	return text
 
+def phone_to_int(str_phone_number): # convert '+12345678910' into 12345678910
+	return int(str_phone_number[1:])
+
+def phone_to_str(int_phone_number): # convert 12345678910 into '+12345678910'
+	return '+'+str(int_phone_number)
