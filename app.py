@@ -1,38 +1,25 @@
-# import json
-# from twilio.rest import Client
 from flask import Flask, request, redirect
-from twilio import twiml
+from twilio.twiml.messaging_response import MessagingResponse
+import helper as hlp
 
 app = Flask(__name__)
 
-# @app.route("/sms", methods=['GET', 'POST'])
-# def sms_ahoy_reply():
-#     """Respond to incoming messages with a friendly SMS."""
-#     # Start our response
-#     resp = twiml.Response()
-
-#     # Add a message
-#     resp.message("Ahoy! Thanks so much for your message.")
-
-#     return str(resp)
-
-@app.route("/", methods=["GET"])
+@app.route("/")
 def main():
-	return "Giorgi is the best software engineer"
+	return "MY APP"
+
+
+@app.route("/listener", methods=['GET', 'POST'])
+def listener():
+	"""Listener method to listen to incoming messages"""
+	resp = MessagingResponse()
+	text = request.values['Body'] # get message text from request.values 
+	sender = request.values['From'] # get sender phone number in the format '+12345678901'
+
+	auto_response = hlp.process_response(sender, text) # get the response from helper function
+	resp.message(auto_response) # respond to sender with the message from processResponse method
+
+	return resp
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-# keys = json.loads(open('keys.json').read())
-# account_sid = keys['account_sid']
-# auth_token = keys['auth_token']
-# client = Client(account_sid, auth_token)
-
-# message = client.messages \
-#                 .create(
-#                      body="Hi how are you?",
-#                      from_=keys['phone_number'],
-#                      to='+17654070369'
-#                  )
-
-# print(message.sid)
