@@ -1,4 +1,4 @@
-import json
+import json, sqlite3 as sql
 from twilio.rest import Client
 
 keys = json.loads(open('keys.json').read())
@@ -23,3 +23,15 @@ def phone_to_int(str_phone_number): # convert '+12345678910' into 12345678910
 
 def phone_to_str(int_phone_number): # convert 12345678910 into '+12345678910'
 	return '+'+str(int_phone_number)
+
+def connect_db(db=keys['database']): # connect to my sqlite database
+	con = sql.connect(db)
+	return con
+
+def migration():
+	with connect_db() as con:
+		query = 'CREATE TABLE students (name TEXT, addr TEXT, city TEXT, pin TEXT)'
+		con.execute(query)
+	print("Migration is successul on query:",query)
+
+
