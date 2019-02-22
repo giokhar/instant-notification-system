@@ -4,20 +4,15 @@ import helper as hlp
 
 app = Flask(__name__)
 
-
 @app.route("/")
 def main():
-	try:
-		hlp.migration() # it will try to make migration if db does not exist
-	except:
-		pass
-	with hlp.connect_db() as con:
-		query = "select * from students"
-		cur = con.cursor()
-		cur.execute(query)
-		rows = cur.fetchall();
-		print(rows)
-	return "MY APP"
+	with hlp.connection.cursor() as cursor:
+		cursor.execute("SELECT * FROM halls")
+
+		result = cursor.fetchall()
+
+	print(result)
+	return "My App"
 
 
 @app.route("/listener", methods=['GET', 'POST'])
