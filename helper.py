@@ -1,4 +1,4 @@
-import json
+import json, pymysql
 from twilio.rest import Client
 
 keys = json.loads(open('keys.json').read())
@@ -24,4 +24,8 @@ def phone_to_int(str_phone_number): # convert '+12345678910' into 12345678910
 def phone_to_str(int_phone_number): # convert 12345678910 into '+12345678910'
 	return '+'+str(int_phone_number)
 
+db = pymysql.connect(keys['db_host'],keys['db_user'],keys['db_pass'],keys['db_name'])
+cursor = db.cursor()
+cursor.execute("SELECT * FROM halls")
+print(cursor.fetchall())
 
