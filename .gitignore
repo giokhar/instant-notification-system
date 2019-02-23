@@ -1,6 +1,5 @@
 # custom ignores
 keys.json
-sqlite.db
 **/.DS_Store
 
 # Byte-compiled / optimized / DLL files
