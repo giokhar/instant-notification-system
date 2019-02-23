@@ -1,10 +1,10 @@
-import json, re, pymysql
+import json, re
 from twilio.rest import Client
+import helpers.database as db
 
 # Get Configuration file keys.json and store values in the variable 'keys'
-try:keys = json.loads(open('keys.json').read())
+try:keys = json.loads(open('helpers/keys.json').read())
 except:raise FileNotFoundError("Configuration file keys.json not found, contact the owner to get access!")
-connection = pymysql.connect(keys['db_host'],keys['db_user'],keys['db_pass'],keys['db_name'])
 
 def create_client():
 	account_sid = keys['account_sid']
@@ -19,7 +19,7 @@ def send_message(receiver, text):
 
 def process_response(sender, text):
 	if is_valid_email(text):
-		with connection.cursor() as cursor:
+		with db.connection.cursor() as cursor:
 			sql = "INSERT INTO `halls` (`name`) VALUES (%s)"
 			cursor.execute(sql, (text.strip().lower()))
 	
