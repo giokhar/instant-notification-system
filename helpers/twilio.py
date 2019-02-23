@@ -11,6 +11,15 @@ def create_client():
 	auth_token = keys['auth_token']
 	return Client(account_sid, auth_token)
 
+#sends the message to everybody who live
+#in specific floors(given by floor_ids).
+def send_mass_message(floor_ids, text):
+	all_phone_nums = db.get_phone_nums(floor_ids)
+
+	for next_phone_num in all_phone_nums:
+		send_message(next_phone_num, text)
+	#NEED TO INSERT TO TABLE OF MASS MESSAGES(HISTORY
+
 #Reciever ex: '+12343423523'
 def send_message(receiver, text):
 	client = create_client()
@@ -21,11 +30,9 @@ def send_message(receiver, text):
 def process_response(sender, text):
 	if is_valid_email(text):
 		with db.connection.cursor() as cursor:
-			sql = "INSERT INTO `halls` (`name`) VALUES (%s)"
+			sql = "INSERT INTO `students` (`name`) VALUES (%s)"
 			cursor.execute(sql, (text.strip().lower()))
 	
-	print(phone_to_int(sender))
-	print(text)
 	return text
 
 def phone_to_int(str_phone_number): # convert '+12345678910' into 12345678910

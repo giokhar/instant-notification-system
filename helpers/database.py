@@ -16,7 +16,7 @@ def format_sql_result(lst):
 	return result
 
 #Is given a string containing floor_ids and returns a list of 
-#phone numbers of students living on those floors.
+#phone numbers(strings, ex : '+123213124') of students living on those floors.
 def get_phone_nums(floor_ids):
 	floor_ids = floor_ids.split(',')
 
@@ -26,7 +26,6 @@ def get_phone_nums(floor_ids):
 		result = cursor.fetchall()
 
 	result = format_sql_result(result)
-	print(result)
 	return result
 	
 

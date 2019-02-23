@@ -1,21 +1,15 @@
 from flask import Flask, request, redirect
 from twilio.twiml.messaging_response import Message, MessagingResponse
 # custom imports
-from helpers.twilio import process_response
+from helpers.twilio import process_response, send_mass_message
 from helpers.database import connection
 
 app = Flask(__name__)
 
 @app.route("/")
 def main():
-	with connection.cursor() as cursor:
-		cursor.execute("SELECT * FROM halls")
-
-		result = cursor.fetchall()
-
-	print(result)
-	# START CUTTING TEMPLATES
-	return "My App"
+	send_mass_message('4,5', "KUTU XAR!!!")
+	return '0'
 
 
 @app.route("/listener", methods=['GET', 'POST'])
