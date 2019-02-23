@@ -14,6 +14,7 @@ def main():
 		result = cursor.fetchall()
 
 	print(result)
+	# START CUTTING TEMPLATES
 	return "My App"
 
 
