@@ -1,21 +1,15 @@
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, render_template
 from twilio.twiml.messaging_response import Message, MessagingResponse
 # custom imports
 from helpers.twilio import process_response
 from helpers.database import connection
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 @app.route("/")
 def main():
-	with connection.cursor() as cursor:
-		cursor.execute("SELECT * FROM halls")
-
-		result = cursor.fetchall()
-
-	print(result)
-	# START CUTTING TEMPLATES
-	return "My App"
+	
+	return render_template('dashboard.html')
 
 
 @app.route("/listener", methods=['GET', 'POST'])
