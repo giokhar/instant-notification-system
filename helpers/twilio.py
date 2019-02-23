@@ -11,6 +11,7 @@ def create_client():
 	auth_token = keys['auth_token']
 	return Client(account_sid, auth_token)
 
+#Reciever ex: '+12343423523'
 def send_message(receiver, text):
 	client = create_client()
 	sender = keys['phone_number']
