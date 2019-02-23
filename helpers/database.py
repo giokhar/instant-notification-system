@@ -49,3 +49,12 @@ def register_student(first, last, email, floor_id, phone):
 
 		connection.commit()
 
+#all given values are strings
+#Updates the data of a student with a given id.
+def edit_students(id, first, last, email, floor_id, phone):
+	with connection.cursor() as cursor:
+		args = (first, last, email, floor_id, phone, id) #a tuple of arguments
+		cursor.execute("UPDATE students SET first=%s, last=%s, email=%s, floor_id=%s, phone=%s WHERE id=%s",args)
+
+		connection.commit()
+
