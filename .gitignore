@@ -1,5 +1,5 @@
 # custom ignores
-keys.json
+**/keys.json
 **/.DS_Store
 
 # Byte-compiled / optimized / DLL files
