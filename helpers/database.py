@@ -27,6 +27,11 @@ def get_phone_nums(floor_ids):
 
 	result = format_sql_result(result)
 	return result
-	
 
-get_phone_nums("2")
+def get_all_students():
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT students.first, students.last, students.email, halls.name, floors.name, students.phone FROM students INNER JOIN floors ON students.floor_id=floors.id INNER JOIN halls ON halls.id=floors.hall_id")
+		result = cursor.fetchall()
+	print(result)
+
+get_all_students()
