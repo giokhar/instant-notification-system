@@ -7,8 +7,27 @@ from helpers.database import connection
 app = Flask(__name__, static_url_path='/static')
 
 @app.route("/")
-def main():
-	
+def dashboard_page():
+	return render_template('dashboard.html')
+
+@app.route("/students")
+def student_data_page():
+	return render_template('dashboard.html')
+
+@app.route("/students/register")
+def register_student_page():
+	return render_template('dashboard.html')
+
+@app.route("/mass-message"):
+def mass_message_page():
+	return render_template('dashboard.html')
+
+@app.route("/chat")
+def chat_page():
+	return render_template('dashboard.html')
+
+@app.route("/about")
+def about_page():
 	return render_template('dashboard.html')
 
 
