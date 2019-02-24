@@ -9,6 +9,7 @@ connection = pymysql.connect(keys['db_host'],keys['db_user'],keys['db_pass'],key
 
 # ALL CUSTOM METHODS TO PULL DATA FROM DATABASE GOES HERE
 
+#HELPER FUNCTION
 #If the tuples in the table contain one element,
 #this method converts the table into a list and returns that list.
 def format_sql_result(lst):
@@ -17,6 +18,7 @@ def format_sql_result(lst):
 		result.append(next[0])
 	return result
 
+#GET FUNCTIONS
 #Is given a string containing floor_ids and returns a list of 
 #phone numbers(strings, ex : '+123213124') of students living on those floors.
 def get_phone_nums(floor_ids):
@@ -24,7 +26,6 @@ def get_phone_nums(floor_ids):
 
 	with connection.cursor() as cursor:
 		format_strings = ','.join(['%s'] * len(floor_ids)) #format the floor_ids so it fils sql query
-		print(format_strings)
 		cursor.execute("SELECT phone FROM students where floor_id IN (%s)" % format_strings, tuple(floor_ids))
 		result = cursor.fetchall()
 
