@@ -21,7 +21,7 @@ $('.zero-configuration').DataTable();
 **************************************/
 
 $('.default-ordering').DataTable( {
-    "order": [[ 3, "desc" ]]
+    "order": [[ 0, "asc" ]]
 } );
 
 /************************************

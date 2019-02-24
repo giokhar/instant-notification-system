@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template
 from twilio.twiml.messaging_response import Message, MessagingResponse
 # custom imports
 from helpers.twilio import process_response
-from helpers.database import connection
+from helpers.database import get_all_students
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -12,7 +12,8 @@ def dashboard_page():
 
 @app.route("/students")
 def student_data_page():
-	return render_template('students.html')
+	students = get_all_students()
+	return render_template('students.html', students=students)
 
 @app.route("/register-student")
 def register_student_page():
