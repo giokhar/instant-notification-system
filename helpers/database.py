@@ -80,10 +80,18 @@ def get_floor_names(hall_id):
 		result = cursor.fetchall()
 	return result
 
-#Givent the student_id returns the phone number of this student.
+#Given the student_id returns the phone number of this student.
 def get_student_phone(student_id):
 	with connection.cursor() as cursor:
 		cursor.execute("SELECT phone FROM students WHERE id=%s", (student_id,))
+		phone = cursor.fetchone()[0] #This returns a tuple and we pick the first element.
+
+	return phone
+
+#Given the phone number returns the id of this student.
+def get_student_id(phone):
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT id FROM students WHERE phone=%s", (phone,))
 		phone = cursor.fetchone()[0] #This returns a tuple and we pick the first element.
 
 	return phone
@@ -96,8 +104,8 @@ def edit_student(id, first, last, email, floor_id, phone):
 		cursor.execute("UPDATE students SET first=%s, last=%s, email=%s, floor_id=%s, phone=%s WHERE id=%s",args)
 
 		connection.commit()
-#Edits the phone number of the student with a given email address.
-def edit_student_phone(email, phone):
+#Adds the phone number of the student with a given email address.
+def add_student_phone(email, phone):
 	with connection.cursor() as cursor:
 		args = (phone, email)
 		cursor.execute("UPDATE students SET phone=%s WHERE email=%s", args)
@@ -123,11 +131,11 @@ def insert_to_mass_messages(floor_ids, message, time):
 
 		connection.commit()
 #Inserts the old messages sent in the chat into the chat_messages table.
-def insert_to_chat_messages(student_id, message, time, is_sender):
+def insert_to_chat_messages(student_id, message, time, is_sender, is_report, is_img):
 	with connection.cursor() as cursor:
-		format_strings = ','.join(['%s'] * 4) #argc == 5
+		format_strings = ','.join(['%s'] * 6) #argc == 5
 
-		cursor.execute("INSERT INTO chat_messages (student_id, message, time, is_sender) VALUES (%s)" % format_strings, (student_id, message, time, is_sender))
+		cursor.execute("INSERT INTO chat_messages (student_id, message, time, is_sender, is_report, is_img) VALUES (%s)" % format_strings, (student_id, message, time, is_sender, is_report, is_img))
 
 		connection.commit()
 
