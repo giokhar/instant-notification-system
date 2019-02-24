@@ -7,8 +7,6 @@ except:raise FileNotFoundError("Configuration file keys.json not found, contact 
 connection = pymysql.connect(keys['db_host'],keys['db_user'],keys['db_pass'],keys['db_name'])
 
 
-# ALL CUSTOM METHODS TO PULL DATA FROM DATABASE GOES HERE
-
 #HELPER FUNCTION
 #If the tuples in the table contain one element,
 #this method converts the table into a list and returns that list.
@@ -26,7 +24,7 @@ def get_phone_nums(floor_ids):
 
 	with connection.cursor() as cursor:
 		format_strings = ','.join(['%s'] * len(floor_ids)) #format the floor_ids so it fils sql query
-		cursor.execute("SELECT phone FROM students where floor_id IN (%s)" % format_strings, tuple(floor_ids))
+		cursor.execute("SELECT phone FROM students WHERE floor_id IN (%s)" % format_strings, tuple(floor_ids))
 		result = cursor.fetchall()
 
 	result = format_sql_result(result)
@@ -55,36 +53,32 @@ def get_alert_names():
 		result = cursor.fetchall()
 	return result
 
-#Returns a dictionary: keys -> audience names, values -> floor_ids(string)
+#Returns a list of [(aud, halls.name, [(floors.id, floor.name),...]),...] 
 def get_audience_names():
-	dict_halls = get_hall_names()
-	dict_floors = get_floor_names()
-	dict_audience = {**dict_halls, **dict_floors}
+	list_audience = []
+	list_halls = get_hall_names()
+	for next_hall in list_halls:
+		aud = next_hall[0]
+		hall_name = next_hall[1]
+		floors = get_floor_names(next_hall[2])
+		list_audience.append((aud, hall_name, floors))
 
-	return dict_audience
-#Returns a dictionary: keys -> hall names, values -> floor_ids(string)
+	return list_audience
+
+#Returns a list of halls grouped by concatinated floor_ids(string)
 def get_hall_names():
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT GROUP_CONCAT(floors.id SEPARATOR ',') as aud, halls.name FROM floors INNER JOIN halls ON halls.id = floors.hall_id GROUP BY halls.name")
+		cursor.execute("SELECT GROUP_CONCAT(floors.id SEPARATOR ',') as aud, halls.name, halls.id FROM floors INNER JOIN halls ON halls.id = floors.hall_id GROUP BY halls.name")
 		result = cursor.fetchall()
 
-	dict_halls = {}
-	for next_aud, next_hall_name in result:
-		dict_halls[next_hall_name] = next_aud
+	return result
 
-	return dict_halls
-
-#Returns a dictionary: keys -> hall names, values -> floor_ids(string)
-def get_floor_names():
+#Returns a list of (id, name) of floors based on hall_id(int)
+def get_floor_names(hall_id):
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT floors.id, halls.name, floors.name FROM floors INNER JOIN halls ON halls.id=floors.hall_id")
+		cursor.execute("SELECT id, name FROM floors WHERE hall_id=%s ORDER BY id", (hall_id,))
 		result = cursor.fetchall()
-
-	dict_floors = {}
-	for next_floor_id, next_hall_name, next_floor_name in result:
-		new_name = next_hall_name + " " + next_floor_name
-		dict_floors[new_name] = next_floor_id
-	return dict_floors
+	return result
 
 #Givent the student_id returns the phone number of this student.
 def get_student_phone(student_id):

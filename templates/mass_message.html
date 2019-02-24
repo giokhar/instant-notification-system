@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
+{% block import_styles%}
+<link rel="stylesheet" type="text/css" href="static/app-assets/vendors/css/forms/selects/select2.min.css">
+{% endblock %}
 {% block content %}
 
 <div class="content-wrapper">
@@ -16,18 +19,33 @@
 			<div class="col-md-12 col-sm-12">
 			    <div id="with-header-border-0" class="card">
 			        <div class="card-header">
-			            <h4 class="card-title">Choose message type</h4>
+			            <h4 class="card-title">Send Mass Message</h4>
 			            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 			        </div>
 			        <div class="card-content collapse show">
 			            <div class="card-body">
-			                <fieldset class="form-group position-relative">
-				              <select class="form-control input-lg" id="LargeSelect">
-				                {% for type in message_types %}
-				                <option value="{{type[0]}}">{{type[1]}}</option>
-				                {% endfor %}
-				              </select>
-				            </fieldset>
+			            	<form method="POST" class="form">
+			            		<div class="form-group">
+			                      <div class="text-bold-600 font-medium-2">
+			                        Select Audience
+			                      </div>
+			                      <select class="select2 form-control" multiple="multiple">
+			                      	{% for aud, hall_name, floors in audience %}
+			                        	<option value="{{ aud }}">{{ hall_name }}</option>
+			                        	{% for floor in floors %}
+			                          		<option value="{{floor[0]}}">&nbsp;&nbsp;&nbsp;{{ hall_name }}, {{ floor[1] }}</option>
+			                          	{% endfor %}
+			                        {% endfor %}
+			                      </select>
+			                    </div>
+				                <fieldset class="form-group">
+			                      <textarea class="form-control" id="basicTextarea" placeholder="Mass Message Text..." rows="4">{{ message_template }}</textarea>
+			                    </fieldset>
+					            <div class="text-right">
+					            	<a href="javascript:history.go(-1)" class="btn btn-secondary">Go Back </a>
+	                          		<button type="submit" class="btn btn-secondary">Send </button>
+	                        	</div>
+		                    </form>
 			            </div>
 			        </div>
 			    </div>
@@ -35,4 +53,8 @@
 		</section>
     </div>
 </div>
+{% endblock %}
+{% block import_scripts %}
+<script src="static/app-assets/vendors/js/forms/select/select2.full.min.js" type="text/javascript"></script>
+<script src="static/app-assets/js/scripts/forms/select/form-select2.js" type="text/javascript"></script>
 {% endblock %}
