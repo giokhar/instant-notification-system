@@ -1,25 +1,25 @@
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="main-menu-content">
       <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-        <li class="active nav-item"><a href="#"><i class="la la-home"></i><span class="menu-title">Dashboard</span><span class="badge badge badge-info badge-pill float-right mr-2">4</span></a>
+        <li class="{%if request.path=='/'%}active{% endif %} nav-item"><a href="/"><i class="la la-home"></i><span class="menu-title">Dashboard</span><span class="badge badge badge-info badge-pill float-right mr-2">4</span></a>
         </li>
-        <li class=" nav-item"><a href="#"><i class="la la-users"></i><span class="menu-title" data-i18n="">Students</span></a>
+        <li class="open nav-item"><a href="#"><i class="la la-users"></i><span class="menu-title">Students</span></a>
           <ul class="menu-content">
-            <li><a href="/students" class="menu-item"><i class="la la-table"></i>Student Data</a>
+            <li class="{%if request.path=='/students'%}active{% endif %}"><a href="/students" class="menu-item"><i class="la la-table"></i>Student Data</a>
             </li>
-            <li><a href="/register-student" class="menu-item"><i class="la la-plus"></i>Register A Student</a>
+            <li class="{%if request.path=='/register-student'%}active{% endif %}"><a href="/register-student" class="menu-item"><i class="la la-plus"></i>Register A Student</a>
             </li>
           </ul>
         </li>
-        <li class=" nav-item"><a href="/mass-message"><i class="la la-envelope"></i><span class="menu-title">Mass Message</span></a>
+        <li class="{%if request.path=='/mass-message'%}active{% endif %} nav-item"><a href="/mass-message"><i class="la la-envelope"></i><span class="menu-title">Mass Message</span></a>
         </li>
-        <li class=" nav-item"><a href="/chat"><i class="la la-comments"></i><span class="menu-title">Chat</span></a>
+        <li class="{%if request.path=='/chat'%}active{% endif %} nav-item"><a href="/chat"><i class="la la-comments"></i><span class="menu-title">Chat</span></a>
         </li>
         <li class=" navigation-header"><span>Extra</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Extra"></i>
         </li>
-        <li class=" nav-item"><a href="/about"><i class="la la-info-circle"></i><span class="menu-title" data-i18n="">About</span></a>
+        <li class="{%if request.path=='/about'%}active{% endif %} nav-item"><a href="/about"><i class="la la-info-circle"></i><span class="menu-title">About</span></a>
         </li>
-        <li class=" nav-item"><a href="https://github.com/GiorgiKharshiladze/instant-notification-system" target="_blank"><i class="la la-github"></i><span class="menu-title" data-i18n="">Github</span></a>
+        <li class=" nav-item"><a href="https://github.com/GiorgiKharshiladze/instant-notification-system" target="_blank"><i class="la la-github"></i><span class="menu-title">Github</span></a>
         </li>
       </ul>
     </div>
