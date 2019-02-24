@@ -47,6 +47,14 @@ def get_alert_template(type_id):
 
 	return template
 
+#Givent the student_id returns the phone number of this student.
+def get_student_phone(student_id):
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT phone FROM students WHERE id=%s", (student_id,))
+		phone = cursor.fetchone()[0] #This returns a tuple and we pick the first element.
+
+	return phone
+
 #all given values are strings
 #Updates the data of a student with a given id.
 def edit_student(id, first, last, email, floor_id, phone):
@@ -55,7 +63,7 @@ def edit_student(id, first, last, email, floor_id, phone):
 		cursor.execute("UPDATE students SET first=%s, last=%s, email=%s, floor_id=%s, phone=%s WHERE id=%s",args)
 
 		connection.commit()
-
+#Edits the phone number of the student with a given email address.
 def edit_student_phone(email, phone):
 	with connection.cursor() as cursor:
 		args = (phone, email)
@@ -79,6 +87,14 @@ def insert_to_mass_messages(floor_ids, message, time):
 		format_strings = ','.join(['%s'] * 3) #argc == 5
 
 		cursor.execute("INSERT INTO mass_messages (floor_ids, message, time) VALUES (%s)" % format_strings, (floor_ids, message, time))
+
+		connection.commit()
+#Inserts the old messages sent in the chat into the chat_messages table.
+def insert_to_chat_messages(student_id, message, time, is_sender):
+	with connection.cursor() as cursor:
+		format_strings = ','.join(['%s'] * 4) #argc == 5
+
+		cursor.execute("INSERT INTO chat_messages (student_id, message, time, is_sender) VALUES (%s)" % format_strings, (student_id, message, time, is_sender))
 
 		connection.commit()
 

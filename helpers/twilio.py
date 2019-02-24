@@ -14,6 +14,7 @@ def create_client():
 
 #sends the message to everybody who live
 #in specific floors(given by floor_ids(string)).
+#Updates the database accordingly.
 def send_mass_message(floor_ids, text):
 	all_phone_nums = db.get_phone_nums(floor_ids)
 
@@ -21,6 +22,13 @@ def send_mass_message(floor_ids, text):
 		send_message(next_phone_num, text)
 	#NEED TO INSERT TO TABLE OF MASS MESSAGES(HISTORY)
 	db.insert_to_mass_messages(floor_ids, text, datetime.now())
+
+#Sends a chat message.
+#Updates the database accordingly.
+def send_chat_message(student_id, text):
+	receiver = db.get_student_phone(student_id)
+	send_message(receiver, text)
+	db.insert_to_chat_messages(student_id, text, datetime.now(), True)
 
 #Reciever ex: '+12343423523'
 def send_message(receiver, text):

@@ -1,14 +1,14 @@
 from flask import Flask, request, redirect
 from twilio.twiml.messaging_response import Message, MessagingResponse
 # custom imports
-from helpers.twilio import process_response, send_mass_message
+from helpers.twilio import process_response, send_mass_message, send_chat_message
 from helpers.database import connection
 
 app = Flask(__name__)
 
 @app.route("/")
 def main():
-	#send_mass_message('4', "<3!!!")
+	send_chat_message(3, "baro blatatatatat")
 	return '0'
 
 
