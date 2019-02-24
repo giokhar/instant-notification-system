@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, render_template
 from twilio.twiml.messaging_response import Message, MessagingResponse
 # custom imports
-from helpers.twilio import process_response
+from helpers.twilio import process_response, send_mass_message, send_chat_message
 from helpers.database import connection
 
 app = Flask(__name__, static_url_path='/static')

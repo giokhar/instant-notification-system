@@ -1,6 +1,7 @@
 import json, re
 from twilio.rest import Client
 import helpers.database as db
+from datetime import datetime
 
 # Get Configuration file keys.json and store values in the variable 'keys'
 try:keys = json.loads(open('helpers/keys.json').read())
@@ -11,6 +12,25 @@ def create_client():
 	auth_token = keys['auth_token']
 	return Client(account_sid, auth_token)
 
+#sends the message to everybody who live
+#in specific floors(given by floor_ids(string)).
+#Updates the database accordingly.
+def send_mass_message(floor_ids, text):
+	all_phone_nums = db.get_phone_nums(floor_ids)
+
+	for next_phone_num in all_phone_nums:
+		send_message(next_phone_num, text)
+	#NEED TO INSERT TO TABLE OF MASS MESSAGES(HISTORY)
+	db.insert_to_mass_messages(floor_ids, text, datetime.now())
+
+#Sends a chat message.
+#Updates the database accordingly.
+def send_chat_message(student_id, text):
+	receiver = db.get_student_phone(student_id)
+	send_message(receiver, text)
+	db.insert_to_chat_messages(student_id, text, datetime.now(), True)
+
+#Reciever ex: '+12343423523'
 def send_message(receiver, text):
 	client = create_client()
 	sender = keys['phone_number']
@@ -19,12 +39,7 @@ def send_message(receiver, text):
 
 def process_response(sender, text):
 	if is_valid_email(text):
-		with db.connection.cursor() as cursor:
-			sql = "INSERT INTO `halls` (`name`) VALUES (%s)"
-			cursor.execute(sql, (text.strip().lower()))
-	
-	print(phone_to_int(sender))
-	print(text)
+		db.edit_student_phone(text.lower(), sender)
 	return text
 
 def phone_to_int(str_phone_number): # convert '+12345678910' into 12345678910
@@ -35,6 +50,4 @@ def phone_to_str(int_phone_number): # convert 12345678910 into '+12345678910'
 
 def is_valid_email(email): # method to check if given email is valid format
 	pattern = "^.+@(\[?)[a-zA-Z0-9-.]+.([a-zA-Z]{2,3}|[0-9]{1,3})(]?)$"
-	if re.match(pattern, email.strip()) != None:
-		return True
-	return False
+	return re.match(pattern, email.strip()) != None
