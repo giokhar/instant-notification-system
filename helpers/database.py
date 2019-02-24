@@ -79,8 +79,6 @@ def get_floor_names():
 		dict_floors[new_name] = next_floor_id
 	return dict_floors
 
-print(get_audience_names())
-
 #Givent the student_id returns the phone number of this student.
 def get_student_phone(student_id):
 	with connection.cursor() as cursor:
