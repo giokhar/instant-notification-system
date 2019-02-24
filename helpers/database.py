@@ -48,6 +48,39 @@ def get_alert_template(type_id):
 
 	return template
 
+#Returns a dictionary: keys -> audience names, values -> floor_ids(string)
+def get_audience_names():
+	dict_halls = get_hall_names()
+	dict_floors = get_floor_names()
+	dict_audience = {**dict_halls, **dict_floors}
+
+	return dict_audience
+#Returns a dictionary: keys -> hall names, values -> floor_ids(string)
+def get_hall_names():
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT GROUP_CONCAT(floors.id SEPARATOR ',') as aud, halls.name FROM floors INNER JOIN halls ON halls.id = floors.hall_id GROUP BY halls.name")
+		result = cursor.fetchall()
+
+	dict_halls = {}
+	for next_aud, next_hall_name in result:
+		dict_halls[next_hall_name] = next_aud
+
+	return dict_halls
+
+#Returns a dictionary: keys -> hall names, values -> floor_ids(string)
+def get_floor_names():
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT floors.id, halls.name, floors.name FROM floors INNER JOIN halls ON halls.id=floors.hall_id")
+		result = cursor.fetchall()
+
+	dict_floors = {}
+	for next_floor_id, next_hall_name, next_floor_name in result:
+		new_name = next_hall_name + " " + next_floor_name
+		dict_floors[new_name] = next_floor_id
+	return dict_floors
+
+print(get_audience_names())
+
 #Givent the student_id returns the phone number of this student.
 def get_student_phone(student_id):
 	with connection.cursor() as cursor:
