@@ -48,6 +48,13 @@ def get_alert_template(type_id):
 
 	return template
 
+# Returns types and names for all alerts
+def get_alert_names():
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT type_id, name FROM alerts ORDER BY type_id")
+		result = cursor.fetchall()
+	return result
+
 #Returns a dictionary: keys -> audience names, values -> floor_ids(string)
 def get_audience_names():
 	dict_halls = get_hall_names()

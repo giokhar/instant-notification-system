@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template
 from twilio.twiml.messaging_response import Message, MessagingResponse
 # custom imports
 from helpers.twilio import process_response
-from helpers.database import get_all_students
+from helpers.database import get_all_students, get_alert_names
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -21,7 +21,8 @@ def register_student_page():
 
 @app.route("/mass-message")
 def mass_message_page():
-	return render_template('mess_message.html')
+	message_types = get_alert_names()
+	return render_template('mass_message.html', message_types=message_types)
 
 @app.route("/chat")
 def chat_page():
