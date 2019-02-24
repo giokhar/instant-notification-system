@@ -38,15 +38,14 @@ def get_all_students():
 		result = cursor.fetchall()
 	return result
 
-#Each argument is given as a string.
-#Adds a new student into the database.
-def register_student(first, last, email, floor_id, phone):
+#Given the type_id of the alert
+#returns the template message for given type_id.
+def get_alert_template(type_id):
 	with connection.cursor() as cursor:
-		format_strings = ','.join(['%s'] * 5) #argc == 5
+		cursor.execute("SELECT template FROM alerts WHERE type_id=%s", (type_id,))
+		template = cursor.fetchone()[0] #This returns a tuple and we pick the first element.
 
-		cursor.execute("INSERT INTO students (first, last, email, floor_id, phone) VALUES (%s)" % format_strings, (first, last, email, floor_id, phone))
-
-		connection.commit()
+	return template
 
 #all given values are strings
 #Updates the data of a student with a given id.
@@ -64,13 +63,22 @@ def edit_student_phone(email, phone):
 
 		connection.commit()
 
-#Given the type_id of the alert
-#returns the template message for given type_id.
-def get_alert_template(type_id):
+#Each argument is given as a string.
+#Adds a new student into the database.
+def register_student(first, last, email, floor_id, phone):
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT template FROM alerts WHERE type_id=%s", (type_id,))
-		template = cursor.fetchone()[0] #This returns a tuple and we pick the first element.
+		format_strings = ','.join(['%s'] * 5) #argc == 5
 
-	return template
+		cursor.execute("INSERT INTO students (first, last, email, floor_id, phone) VALUES (%s)" % format_strings, (first, last, email, floor_id, phone))
 
+		connection.commit()
+
+#Inserts the old messages to the mass_messages table.
+def insert_to_mass_messages(floor_ids, message, time):
+	with connection.cursor() as cursor:
+		format_strings = ','.join(['%s'] * 3) #argc == 5
+
+		cursor.execute("INSERT INTO mass_messages (floor_ids, message, time) VALUES (%s)" % format_strings, (floor_ids, message, time))
+
+		connection.commit()
 
