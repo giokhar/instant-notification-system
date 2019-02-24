@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-	send_mass_message('4,5', "KUTU XAR!!!")
+	#send_mass_message('4,5', "KUTU XAR!!!")
 	return '0'
 
 

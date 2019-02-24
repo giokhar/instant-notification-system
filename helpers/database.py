@@ -42,7 +42,6 @@ def get_all_students():
 #Adds a new student into the database.
 def register_student(first, last, email, floor_id, phone):
 	with connection.cursor() as cursor:
-
 		format_strings = ','.join(['%s'] * 5) #argc == 5
 
 		cursor.execute("INSERT INTO students (first, last, email, floor_id, phone) VALUES (%s)" % format_strings, (first, last, email, floor_id, phone))
@@ -51,10 +50,27 @@ def register_student(first, last, email, floor_id, phone):
 
 #all given values are strings
 #Updates the data of a student with a given id.
-def edit_students(id, first, last, email, floor_id, phone):
+def edit_student(id, first, last, email, floor_id, phone):
 	with connection.cursor() as cursor:
 		args = (first, last, email, floor_id, phone, id) #a tuple of arguments
 		cursor.execute("UPDATE students SET first=%s, last=%s, email=%s, floor_id=%s, phone=%s WHERE id=%s",args)
 
 		connection.commit()
+
+def edit_student_phone(email, phone):
+	with connection.cursor() as cursor:
+		args = (phone, email)
+		cursor.execute("UPDATE students SET phone=%s WHERE email=%s", args)
+
+		connection.commit()
+
+#Given the type_id of the alert
+#returns the template message for given type_id.
+def get_alert_template(type_id):
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT template FROM alerts WHERE type_id=%s", (type_id,))
+		template = cursor.fetchone()[0] #This returns a tuple and we pick the first element.
+
+	return template
+
 

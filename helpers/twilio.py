@@ -29,10 +29,7 @@ def send_message(receiver, text):
 
 def process_response(sender, text):
 	if is_valid_email(text):
-		with db.connection.cursor() as cursor:
-			sql = "INSERT INTO `students` (`name`) VALUES (%s)"
-			cursor.execute(sql, (text.strip().lower()))
-	
+		db.edit_student_phone(text.lower(), sender)
 	return text
 
 def phone_to_int(str_phone_number): # convert '+12345678910' into 12345678910
@@ -43,6 +40,4 @@ def phone_to_str(int_phone_number): # convert 12345678910 into '+12345678910'
 
 def is_valid_email(email): # method to check if given email is valid format
 	pattern = "^.+@(\[?)[a-zA-Z0-9-.]+.([a-zA-Z]{2,3}|[0-9]{1,3})(]?)$"
-	if re.match(pattern, email.strip()) != None:
-		return True
-	return False
+	return re.match(pattern, email.strip()) != None
