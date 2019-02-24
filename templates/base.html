@@ -22,6 +22,7 @@
     <!-- BEGIN Page Level CSS-->
     <link rel="stylesheet" type="text/css" href="static/app-assets/css/core/menu/menu-types/vertical-menu-modern.css">
     <!-- END Page Level CSS-->
+    {% block import_styles %}{% endblock %}
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="static/assets/css/style.css">
     <!-- END Custom CSS-->
@@ -55,8 +56,9 @@
     <script src="static/app-assets/vendors/js/ui/blockUI.min.js" type="text/javascript"></script>
     <script src="static/app-assets/vendors/js/ui/jquery-sliding-menu.js" type="text/javascript"></script>
     <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <!-- END PAGE VENDOR JS-->
+    <!-- BEGIN PAGE IMPORTED JS-->
+    {% block import_scripts %}{% endblock %}
+    <!-- END PAGE IMPORTED JS-->
     <!-- BEGIN MODERN JS-->
     <script src="static/app-assets/js/core/app-menu.js" type="text/javascript"></script>
     <script src="static/app-assets/js/core/app.js" type="text/javascript"></script>
