@@ -20,7 +20,7 @@ def send_mass_message(floor_ids, text):
 
 	for next_phone_num in all_phone_nums:
 		send_message(next_phone_num, text)
-	#NEED TO INSERT TO TABLE OF MASS MESSAGES(HISTORY)
+	# Inserts into mass_messages table to keep track of all the messages
 	db.insert_to_mass_messages(floor_ids, text, datetime.now())
 
 #Sends a chat message.

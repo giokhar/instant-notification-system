@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, render_template
 from twilio.twiml.messaging_response import Message, MessagingResponse
 # custom imports
-from helpers.twilio import process_response
+from helpers.twilio import process_response, send_mass_message
 from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names
 
 app = Flask(__name__, static_url_path='/static')
@@ -21,7 +21,12 @@ def register_student_page():
 
 @app.route("/mass-message", methods=['GET', 'POST'])
 def mass_message_page():
-	if request.form.get('type_id'):
+	if request.form.get('message') and request.form.getlist('selected_audience'):
+		floor_ids = ",".join(request.form.getlist('selected_audience'))
+		text = request.form.get('message')
+		send_mass_message(floor_ids, text) 
+		return redirect("/chat")
+	elif request.form.get('type_id'):
 		audience = get_audience_names()
 		message_template = get_alert_template(request.form.get('type_id'))
 		return render_template('mass_message.html', message_template=message_template, audience=audience)
