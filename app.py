@@ -12,23 +12,23 @@ def dashboard_page():
 
 @app.route("/students")
 def student_data_page():
-	return render_template('dashboard.html')
+	return render_template('students.html')
 
-@app.route("/students/register")
+@app.route("/register-student")
 def register_student_page():
-	return render_template('dashboard.html')
+	return render_template('register_student.html')
 
-@app.route("/mass-message"):
+@app.route("/mass-message")
 def mass_message_page():
-	return render_template('dashboard.html')
+	return render_template('mess_message.html')
 
 @app.route("/chat")
 def chat_page():
-	return render_template('dashboard.html')
+	return render_template('chat.html')
 
 @app.route("/about")
 def about_page():
-	return render_template('dashboard.html')
+	return render_template('about.html')
 
 
 @app.route("/listener", methods=['GET', 'POST'])
