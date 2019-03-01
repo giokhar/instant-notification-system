@@ -1,9 +1,11 @@
 from flask import Flask, request, redirect, render_template
+from flask_socketio import SocketIO
 # custom imports
 from helpers.twilio import process_response, send_mass_message
 from helpers.database import keys, get_all_students, get_alert_names, get_alert_template, get_audience_names
 
 app = Flask(__name__, static_url_path='/static')
+socketio = SocketIO(app)
 
 @app.route("/")
 def dashboard_page():
@@ -35,11 +37,23 @@ def mass_message_page():
 
 @app.route("/chat")
 def chat_page():
+	# GET THE MOST RECENT USER ID BASED ON LAST MESSAGE
+	user_id = 1
+	return redirect('/chat/'+str(user_id))
+
+@app.route("/chat/<user_id>")
+def chat_user_page(user_id):
+	print(user_id)
 	return render_template('chat.html')
 
 @app.route("/about")
 def about_page():
 	return render_template('about.html')
+
+@socketio.on('my event')
+def handle_my_custom_event(json, methods=['GET', 'POST']):
+    print('received my event: ' + str(json))
+    socketio.emit('my response', json)
 
 
 @app.route("/listener", methods=['GET', 'POST'])
