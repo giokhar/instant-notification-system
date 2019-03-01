@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template
 from flask_socketio import SocketIO
 # custom imports
 from helpers.twilio import process_response, send_mass_message
-from helpers.database import keys, get_all_students, get_alert_names, get_alert_template, get_audience_names
+from helpers.database import keys, get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id
 from helpers.custom import format_floor_ids
 
 app = Flask(__name__, static_url_path='/static')
@@ -42,10 +42,10 @@ def mass_message_page():
 @app.route("/chat")
 def chat_page():
 	# GET THE MOST RECENT USER ID BASED ON LAST MESSAGE
-	student_id = 1
+	student_id = get_last_read_student_id()
 	return redirect('/chat/'+str(student_id))
 
-@app.route("/chat/<student_id>")
+@app.route("/chat/<user_id>")
 def chat_user_page(user_id):
 	# user_id, because it can be either student_id or floors_id list
 	print(user_id)
