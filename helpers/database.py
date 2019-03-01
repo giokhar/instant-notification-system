@@ -116,9 +116,18 @@ def get_student_id(phone):
 #Format: [(student_id, message, is_sender, time)]
 def get_all_chat_messages_with(student_id):
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT student_id, message, is_sender, is_img, time FROM chat_messages WHERE student_id=%s ORDER BY time DESC", (student_id,))
+		cursor.execute("SELECT student_id, message, is_sender, is_img, time FROM chat_messages WHERE student_id=%s ORDER BY time ASC", (student_id,))
 		result = cursor.fetchall()
-	print(result)
+	return result
+
+#Returns the entries id, floor_ids, message and time
+#from the mass messages table.
+#Format: list of tuples
+def get_all_mass_messages():
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT * FROM mass_messages ORDER BY time ASC")
+		result = cursor.fetchall()
+
 	return result
 
 #returns the id of the student 
