@@ -4,8 +4,8 @@
 #and moreover, the list(string) is sorted.
 def format_floor_ids(floor_ids_list):
 	#first flatten out an array.
-	flat_list = ','.join(floor_ids_list)
-	flat_list = flat_list.split(',')
+	flat_list = '.'.join(floor_ids_list)
+	flat_list = flat_list.split('.')
 	
 	#then sort the unique elements.
 	result = sorted(set(flat_list), key=lambda x: int(x))

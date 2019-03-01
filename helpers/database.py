@@ -68,7 +68,7 @@ def get_audience_names():
 #Returns a list of halls grouped by concatinated floor_ids(string)
 def get_hall_names():
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT GROUP_CONCAT(floors.id SEPARATOR ',') as aud, halls.name, halls.id FROM floors INNER JOIN halls ON halls.id = floors.hall_id GROUP BY halls.name")
+		cursor.execute("SELECT GROUP_CONCAT(floors.id SEPARATOR '.') as aud, halls.name, halls.id FROM floors INNER JOIN halls ON halls.id = floors.hall_id GROUP BY halls.name")
 		result = cursor.fetchall()
 
 	return result
@@ -79,6 +79,13 @@ def get_floor_names(hall_id):
 		cursor.execute("SELECT id, name FROM floors WHERE hall_id=%s ORDER BY id", (hall_id,))
 		result = cursor.fetchall()
 	return result
+
+# #Floor_ids format: string containing dot separated values
+# def get_floor_names_by_floor_ids(floor_ids):
+# 	with connection.cursor() as cursor:
+# 		floor_ids.split('.')
+		
+# 	return result
 
 #Given the student_id returns the phone number of this student.
 def get_student_phone(student_id):
