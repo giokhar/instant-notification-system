@@ -80,12 +80,20 @@ def get_floor_names(hall_id):
 		result = cursor.fetchall()
 	return result
 
-# #Floor_ids format: string containing dot separated values
-# def get_floor_names_by_floor_ids(floor_ids):
-# 	with connection.cursor() as cursor:
-# 		floor_ids.split('.')
-		
-# 	return result
+#Floor_ids format: string containing dot separated values
+#Based on the floor_ids it returns a list containing
+#the tuples of (hall name, floor name)
+def get_floor_names_by_floor_ids(floor_ids):
+	
+	floor_ids = floor_ids.split('.')
+
+	with connection.cursor() as cursor:
+		format_strings = ','.join(['%s'] * len(floor_ids))
+
+		cursor.execute("SELECT halls.name, floors.name FROM floors INNER JOIN halls ON floors.hall_id=halls.id WHERE floors.id IN (%s)" % format_strings, tuple(floor_ids))
+		result = cursor.fetchall()
+
+	return result
 
 #Given the student_id returns the phone number of this student.
 def get_student_phone(student_id):
@@ -117,7 +125,7 @@ def get_all_chat_messages_with(student_id):
 #with the most recent read message. 
 def get_last_read_student_id():
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT chats.student_id FROM chat_messages INNER JOIN chats WHERE chat_messages.student_id=chats.student_id AND chat_messages.is_sender=1 AND chats.unread_count=0 ORDER BY chat_messages.time DESC")
+		cursor.execute("SELECT chats.student_id FROM chat_messages INNER JOIN chats ON chat_messages.student_id=chats.student_id WHERE chat_messages.is_sender=1 AND chats.unread_count=0 ORDER BY chat_messages.time DESC")
 		result = cursor.fetchone()[0]
 	return result
 
