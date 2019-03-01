@@ -101,7 +101,7 @@ def get_student_id(phone):
 #Format: [(student_id, message, is_sender, time)]
 def get_all_chat_messages_with(student_id):
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT student_id, message, is_sender, is_img, time FROM chat_messages WHERE student_id=%s", (student_id,))
+		cursor.execute("SELECT student_id, message, is_sender, is_img, time FROM chat_messages WHERE student_id=%s ORDER BY time DESC", (student_id,))
 		result = cursor.fetchall()
 	print(result)
 	return result
@@ -113,7 +113,7 @@ def get_last_read_student_id():
 		cursor.execute("SELECT chats.student_id FROM chat_messages INNER JOIN chats WHERE chat_messages.student_id=chats.student_id AND chat_messages.is_sender=1 AND chats.unread_count=0 ORDER BY chat_messages.time DESC")
 		result = cursor.fetchone()[0]
 	return result
-	
+
 #all given values are strings
 #Updates the data of a student with a given id.
 def edit_student(id, first, last, email, floor_id, phone):
