@@ -38,12 +38,14 @@ def mass_message_page():
 @app.route("/chat")
 def chat_page():
 	# GET THE MOST RECENT USER ID BASED ON LAST MESSAGE
-	user_id = 1
-	return redirect('/chat/'+str(user_id))
+	student_id = 1
+	return redirect('/chat/'+str(student_id))
 
-@app.route("/chat/<user_id>")
+@app.route("/chat/<student_id>")
 def chat_user_page(user_id):
+	# user_id, because it can be either student_id or floors_id list
 	print(user_id)
+
 	return render_template('chat.html')
 
 @app.route("/about")
