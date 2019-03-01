@@ -20,10 +20,10 @@ def format_sql_result(lst):
 #Is given a string containing floor_ids and returns a list of 
 #phone numbers(strings, ex : '+123213124') of students living on those floors.
 def get_phone_nums(floor_ids):
-	floor_ids = floor_ids.split(',')
+	floor_ids = floor_ids.split('.')
 
 	with connection.cursor() as cursor:
-		format_strings = ','.join(['%s'] * len(floor_ids)) #format the floor_ids so it fils sql query
+		format_strings = ','.join(['%s'] * len(floor_ids)) #format the floor_ids so it fits sql query
 		cursor.execute("SELECT phone FROM students WHERE floor_id IN (%s)" % format_strings, tuple(floor_ids))
 		result = cursor.fetchall()
 
@@ -96,6 +96,16 @@ def get_student_id(phone):
 
 	return phone
 
+
+#returns a list of tuples containing message, is_sender,time  associated with a given student_id.
+#Format: [(student_id, message, is_sender, time)]
+def get_all_chat_messages_with(student_id):
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT student_id, message, is_sender, is_img, time FROM chat_messages WHERE student_id=%s", (student_id,))
+		result = cursor.fetchall()
+	print(result)
+	return result
+	
 #all given values are strings
 #Updates the data of a student with a given id.
 def edit_student(id, first, last, email, floor_id, phone):
@@ -104,6 +114,8 @@ def edit_student(id, first, last, email, floor_id, phone):
 		cursor.execute("UPDATE students SET first=%s, last=%s, email=%s, floor_id=%s, phone=%s WHERE id=%s",args)
 
 		connection.commit()
+
+
 #Adds the phone number of the student with a given email address.
 def add_student_phone(email, phone):
 	with connection.cursor() as cursor:
