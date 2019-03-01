@@ -105,6 +105,14 @@ def get_all_chat_messages_with(student_id):
 		result = cursor.fetchall()
 	print(result)
 	return result
+
+#returns the id of the student 
+#with the most recent read message. 
+def get_last_read_student_id():
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT chats.student_id FROM chat_messages INNER JOIN chats WHERE chat_messages.student_id=chats.student_id AND chat_messages.is_sender=1 AND chats.unread_count=0 ORDER BY chat_messages.time DESC")
+		result = cursor.fetchone()[0]
+	return result
 	
 #all given values are strings
 #Updates the data of a student with a given id.
