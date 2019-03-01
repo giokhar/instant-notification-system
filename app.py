@@ -3,6 +3,7 @@ from flask_socketio import SocketIO
 # custom imports
 from helpers.twilio import process_response, send_mass_message
 from helpers.database import keys, get_all_students, get_alert_names, get_alert_template, get_audience_names
+from helpers.custom import format_floor_ids
 
 app = Flask(__name__, static_url_path='/static')
 socketio = SocketIO(app)
@@ -22,8 +23,11 @@ def register_student_page():
 
 @app.route("/mass-message", methods=['GET', 'POST'])
 def mass_message_page():
-	if request.form.get('message') and request.form.getlist('selected_audience'):
-		floor_ids = ",".join(request.form.getlist('selected_audience'))
+	floor_ids_list = request.form.getlist('selected_audience')
+
+	if request.form.get('message') and floor_ids_list:
+		floor_ids = format_floor_ids(floor_ids_list)
+		print(floor_ids)
 		text = request.form.get('message')
 		send_mass_message(floor_ids, text) 
 		return redirect("/chat")
