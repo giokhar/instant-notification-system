@@ -70,7 +70,7 @@ def about_page():
 def handle_my_custom_event(data, methods=['GET', 'POST']):
     # print('received my event: ' + str(data))
     socketio.emit('message_sent', data)
-    send_chat_message(data['student_id'],data['message'])
+    # send_chat_message(data['student_id'],data['message'])
 
 
 @app.route("/listener", methods=['GET', 'POST'])

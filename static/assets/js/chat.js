@@ -19,6 +19,9 @@ $(document).ready(function(){
     	$("input[name=message]").val("")
     	$('.chats').append('<div class="chat"><div class="chat-body"><div class="chat-content"><p>'+data.message+'</p></div></div></div>')
     	$('.chat-app-window').scrollTop(Number.MAX_SAFE_INTEGER) // Always scroll down when message sent
+        let student_messages = $('a[href^="/chat/'+data.student_id+'"]')
+        $('#student_messages').prepend(student_messages) // Prepend user messages on top of the list
+        student_messages.find("div > p > span#messages-id-"+data.student_id).text(data.message)
         console.log(data)
     })
 
