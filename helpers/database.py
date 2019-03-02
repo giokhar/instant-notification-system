@@ -256,3 +256,12 @@ def insert_to_chat_messages(student_id, message, time, is_sender, is_report, is_
 
 		connection.commit()
 
+#With a given email checks if such email exists in the database 
+#and returns a corresponding boolean value.
+def if_email_exists(email):
+	restart_connection()
+
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT id FROM students WHERE email=%s", (email,))
+		result = cursor.fetchall()
+	return len(result) != 0

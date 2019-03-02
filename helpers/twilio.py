@@ -70,7 +70,6 @@ def process_response(request):
 				send_message(phone, "Ready to hear your report...")
 			elif text == "2":
 				send_message(phone, "Hi, how can public safety help you?")
-
 			else:
 				db.insert_to_chat_messages(student_id, text, datetime.now(), is_sender, is_report, is_img)
 				db.edit_unread_count(student_id, opr=1)
@@ -86,9 +85,6 @@ def process_response(request):
 				db.edit_student_phone(text.lower(), phone)
 			else:
 				send_message(phone, "Your phone number is not in our database. Please reply with your valid email in order to register...")
-
-	else:
-		print("Waiting for the request")
 	return 1
 
 def is_valid_email(email): # method to check if given email is valid format
