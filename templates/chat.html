@@ -38,7 +38,7 @@
                 <span id="messages-id-{{student[0]}}">{%if student[6]%}Image{%else%}{{ student[3] }}{%endif%}</span>
                 <span class="float-right primary">
                   {%if student[7]!=0%}
-                    <span class="badge badge-pill badge-dark">{{student[7]}}</span>
+                    <span class="badge badge-pill badge-dark" id="unread_count-{{student[0]}}">{{student[7]}}</span>
                   {%endif%}
                 </span>
               </p>

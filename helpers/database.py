@@ -169,7 +169,7 @@ def get_last_read_student_id():
 
 	with connection.cursor() as cursor:
 		cursor.execute("SELECT chats.student_id FROM chat_messages INNER JOIN chats ON chat_messages.student_id=chats.student_id WHERE chat_messages.is_sender=1 AND chats.unread_count=0 ORDER BY chat_messages.time DESC")
-		result = cursor.fetchone()[0]
+		result = cursor.fetchone()
 	return result
 
 #returns all the student info with the most

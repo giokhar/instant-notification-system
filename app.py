@@ -50,7 +50,9 @@ def mass_message_page():
 
 @app.route("/chat")
 def chat_page():
-	student_id = get_last_read_student_id()
+	student_id = 1
+	if get_last_read_student_id():
+		student_id = get_last_read_student_id()[0]
 	return redirect('/chat/'+str(student_id))
 
 @app.route("/chat/<student_id>", methods=['GET', 'POST'])
@@ -76,7 +78,7 @@ def handle_my_custom_event(data, methods=['GET', 'POST']):
 @app.route("/listener", methods=['GET', 'POST'])
 def listener():
 	"""Listener method to listen to incoming messages"""
-	auto_response = process_response(request)
+	auto_response = process_response(request, socketio)
 	return str(request)
 
 if __name__ == "__main__":

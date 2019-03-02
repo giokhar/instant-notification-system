@@ -45,7 +45,7 @@ def process_image(request):
 		f.write(requests.get(image_url).content)
 	db.insert_to_chat_messages(student_id, text, datetime.now(), True, False, True) # insert image url into chat_messages table
 
-def process_response(request):
+def process_response(request, socketio):
 	if request.values.get('NumMedia', False):
 		phone = request.values['From']
 		text = request.values['Body'].strip()
@@ -71,6 +71,7 @@ def process_response(request):
 			elif text == "2":
 				send_message(phone, "Hi, how can public safety help you?")
 			else:
+				socketio.emit('message_received', {"student_id":student_id, "message":text})
 				db.insert_to_chat_messages(student_id, text, datetime.now(), is_sender, is_report, is_img)
 				db.edit_unread_count(student_id, opr=1)
 

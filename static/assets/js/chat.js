@@ -22,11 +22,15 @@ $(document).ready(function(){
         let student_messages = $('a[href^="/chat/'+data.student_id+'"]')
         $('#student_messages').prepend(student_messages) // Prepend user messages on top of the list
         student_messages.find("div > p > span#messages-id-"+data.student_id).text(data.message)
-        console.log(data)
     })
 
     socket.on( 'message_received', function( data ){
-    	// CHECK IF THAT STUDENT ID IS AN OPEN WINDOW AND THEN DECIDE EITHER TO APPEND TO THE SIDEBAR OR CHAT MESSAGES
+        // CHECK if user exists, chat open, chat closed
+        let student_messages = $('a[href^="/chat/'+data.student_id+'"]')
+        $('#student_messages').prepend(student_messages) // Prepend user messages on top of the list
+        student_messages.find("div > p > span#messages-id-"+data.student_id).text(data.message)
+        let unread_count = student_messages.find("div > p > span > span#unread_count-"+data.student_id)
+        unread_count.html(Number(unread_count.html())+1)
     })
 
 });
