@@ -87,8 +87,9 @@ def process_response(request):
 			else:
 				send_message(phone, "Your phone number is not in our database. Please reply with your valid email in order to register...")
 	return 1
-
-def is_valid_email(email): # method to check if given email is valid format
+# method to check if given email is valid format
+# and check if such email is in our database
+def is_valid_email(email): 
 	pattern = "^.+@(\[?)[a-zA-Z0-9-.]+.([a-zA-Z]{2,3}|[0-9]{1,3})(]?)$"
 	email = email.strip()
 	return re.match(pattern, email) != None and db.if_email_exists(email)
