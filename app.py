@@ -39,7 +39,7 @@ def mass_message_page():
 		message_types = get_alert_names()
 		return render_template('mass_message_type.html', message_types=message_types)
 
-@app.route("/chat")
+@app.route("/chat", methods=['GET', 'POST'])
 def chat_page():
 	# GET THE MOST RECENT USER ID BASED ON LAST MESSAGE
 	student_id = get_last_read_student_id()
@@ -56,10 +56,10 @@ def chat_user_page(user_id):
 def about_page():
 	return render_template('about.html')
 
-@socketio.on('my event')
+@socketio.on('my_event')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json))
-    socketio.emit('my response', json)
+    socketio.emit('message_sent', json)
 
 
 @app.route("/listener", methods=['GET', 'POST'])
