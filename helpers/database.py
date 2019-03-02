@@ -138,6 +138,14 @@ def get_last_read_student_id():
 		result = cursor.fetchone()[0]
 	return result
 
+#returns all the student info with the most
+#recent message and unread count
+def get_students_recent_messages_with_unread_count():
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT CONVERT(chats.student_id, CHAR), students.first, students.last, message, is_sender, is_report, is_img, chats.unread_count, time FROM chat_messages INNER JOIN chats ON chat_messages.student_id=chats.student_id INNER JOIN students ON chats.student_id=students.id WHERE chat_messages.id IN (SELECT MAX(chat_messages.id) FROM chat_messages GROUP BY student_id) ORDER BY time DESC")
+		result = cursor.fetchall()
+	return result
+
 #all given values are strings
 #Updates the data of a student with a given id.
 def edit_student(id, first, last, email, floor_id, phone):
