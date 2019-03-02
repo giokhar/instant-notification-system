@@ -1,6 +1,10 @@
 import json, pymysql
 
-connection = None
+connection = None #initial value.updated in restart_connection()
+# Get Configuration file keys.json and store values in the variable 'keys'
+try:keys = json.loads(open('helpers/keys.json').read())
+except:raise FileNotFoundError("Configuration file keys.json not found, contact the owner to get access!")
+
 #Is run in every function in this file,
 #to avoid the connection timeout 
 def restart_connection():
@@ -8,9 +12,6 @@ def restart_connection():
 
 	if connection != None and connection.open:
 		connection.close()
-	# Get Configuration file keys.json and store values in the variable 'keys'
-	try:keys = json.loads(open('helpers/keys.json').read())
-	except:raise FileNotFoundError("Configuration file keys.json not found, contact the owner to get access!")
 	#changing the global variable connection.
 	connection = pymysql.connect(keys['db_host'],keys['db_user'],keys['db_pass'],keys['db_name'])
 
@@ -18,7 +19,7 @@ def restart_connection():
 #If the tuples in the table contain one element,
 #this method converts the table into a list and returns that list.
 def format_sql_result(lst):
-	result = []
+	result = [] 
 	for next in lst:
 		result.append(next[0])
 	return result
@@ -181,6 +182,18 @@ def get_students_recent_messages_with_unread_count():
 		result = cursor.fetchall()
 	return result
 
+#uses get_students_recent_messages_with_unread_count() and
+#returns the table entries where undread_count is not 0.(there are some unread messages)
+def get_students_recent_messages_with_unread_messages():
+	table = get_students_recent_messages_with_unread_count()
+	result = []
+	unread_count_index = 7 #MAGIC NUM but needed
+	for next_tuple in table:
+		if next_tuple[unread_count_index] != 0:
+			result.append(next_tuple)
+	return result 
+
+print(get_students_recent_messages_with_unread_messages())
 #student name, last name, message, sorted by time
 def get_all_reports():
 	restart_connection()
