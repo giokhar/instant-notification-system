@@ -13,7 +13,6 @@ def restart_connection():
 	except:raise FileNotFoundError("Configuration file keys.json not found, contact the owner to get access!")
 	#changing the global variable connection.
 	connection = pymysql.connect(keys['db_host'],keys['db_user'],keys['db_pass'],keys['db_name'])
-	print("restarted mySQL")
 
 #HELPER FUNCTION
 #If the tuples in the table contain one element,
