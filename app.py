@@ -65,7 +65,6 @@ def handle_my_custom_event(data, methods=['GET', 'POST']):
 def listener():
 	"""Listener method to listen to incoming messages"""
 	auto_response = process_response(request)
-	print(auto_response)
 	return str(request)
 
 if __name__ == "__main__":

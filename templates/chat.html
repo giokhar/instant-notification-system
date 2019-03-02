@@ -55,7 +55,7 @@
               <h6 class="list-group-item-heading">{{ student[1] }} {{ student[2] }}
                 <span class="font-small-3 float-right info">{{ student[8] }}</span>
               </h6>
-              <p class="list-group-item-text text-muted mb-0">{{ student[3] }}
+              <p class="list-group-item-text text-muted mb-0">{%if student[6]%}Image{%else%}{{ student[3] }}{%endif%}
                 <span class="float-right primary"></span>
               </p>
             </div>
