@@ -6,7 +6,7 @@ connection = None
 def restart_connection():
 	global connection
 
-	if connection != None:
+	if connection != None and connection.open:
 		connection.close()
 	# Get Configuration file keys.json and store values in the variable 'keys'
 	try:keys = json.loads(open('helpers/keys.json').read())
@@ -128,6 +128,7 @@ def get_student_phone(student_id):
 	return phone
 
 #Given the phone number returns the id of this student.
+#Gives error when such student doesn't exist
 def get_student_id(phone):
 	restart_connection()
 
@@ -212,8 +213,8 @@ def edit_unread_count(student_id, opr):
 			cursor.execute("UPDATE chats SET unread_count=unread_count+1 WHERE student_id=%s", (student_id,))
 		connection.commit()
 
-#Adds the phone number of the student with a given email address.
-def add_student_phone(email, phone):
+#Updates the phone number of the student with a given email address.
+def edit_student_phone(email, phone):
 	restart_connection()
 
 	with connection.cursor() as cursor:
