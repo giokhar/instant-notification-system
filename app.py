@@ -10,7 +10,7 @@ socketio = SocketIO(app)
 
 def render_template_with_dict(template, extra):
 	common_dict = {}
-	return render_template(template, {**common_dict, **extra})
+	return render_template(template, data={**common_dict, **extra})
 
 @app.route("/")
 def dashboard_page():
