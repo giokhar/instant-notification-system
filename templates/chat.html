@@ -43,7 +43,7 @@
           </a>
 
           {% for student in students %}
-          <a href="/chat/{{ student[0] }}" class="media {%if request.path.split('/')[2]==student[0] %}bg-blue-grey bg-lighten-4 border-right-info border-right-2{%else%}border-0{% endif %}">
+          <a href="/chat/{{ student[0] }}" class="media {%if request.path.split('/')[2]==student[0]%}bg-blue-grey bg-lighten-4 border-right-info border-right-2{%elif student[7]!=0%}bg-blue-grey bg-lighten-5 border-right-info border-right-2{%else%}border-0{% endif %}">
             <div class="media-left pr-1">
               <span class="avatar avatar-md">
                 <img class="media-object rounded-circle" src="{{ url_for('static', filename='app-assets/images/portrait/small/avatar-s-3.png') }}"
@@ -56,7 +56,11 @@
                 <span class="font-small-3 float-right info">{{ student[8] }}</span>
               </h6>
               <p class="list-group-item-text text-muted mb-0">{%if student[6]%}Image{%else%}{{ student[3] }}{%endif%}
-                <span class="float-right primary"></span>
+                <span class="float-right primary">
+                  {%if student[7]!=0%}
+                    <span class="badge badge-pill badge-danger">{{student[7]}}</span>
+                  {%endif%}
+                </span>
               </p>
             </div>
           </a>
