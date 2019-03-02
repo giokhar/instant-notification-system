@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template
 from flask_socketio import SocketIO
 # custom imports
 from helpers.twilio import process_response, send_mass_message
-from helpers.database import keys, get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id
+from helpers.database import keys, get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with
 from helpers.custom import format_floor_ids
 
 app = Flask(__name__, static_url_path='/static')
@@ -45,12 +45,10 @@ def chat_page():
 	student_id = get_last_read_student_id()
 	return redirect('/chat/'+str(student_id))
 
-@app.route("/chat/<user_id>")
-def chat_user_page(user_id):
-	# user_id, because it can be either student_id or floors_id list
-	print(user_id)
-
-	return render_template('chat.html')
+@app.route("/chat/<student_id>")
+def chat_user_page(student_id):
+	messages = get_all_chat_messages_with(student_id)
+	return render_template('chat.html', messages=messages)
 
 @app.route("/about")
 def about_page():

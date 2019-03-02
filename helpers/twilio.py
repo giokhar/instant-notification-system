@@ -46,8 +46,8 @@ def process_response(request):
 			student_id = db.get_student_id(phone)
 			if request.values['NumMedia'] != '0':
 				filename = request.values['MessageSid']+'.png'
-				text = keys['static_url']+"/"+filename
-				with open('{}/{}'.format(keys['static_url'], filename), 'wb') as f:
+				text = keys['static']+"/"+filename
+				with open('{}/{}'.format(keys['download_url'], filename), 'wb') as f:
 					image_url = request.values['MediaUrl0']
 					f.write(requests.get(image_url).content)
 				db.insert_to_chat_messages(student_id, text, datetime.now(), True, False, True) # insert image url into chat_messages table
