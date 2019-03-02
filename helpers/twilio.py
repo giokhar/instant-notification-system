@@ -37,29 +37,56 @@ def send_message(receiver, text):
 	message = client.messages.create(from_=sender, body=text, to=receiver)
 	return message
 
+def process_image(request):
+	filename = request.values['MessageSid']+'.png'
+	text = "downloads/"+filename
+	with open('{}/{}'.format(keys['download_url'], filename), 'wb') as f:
+		image_url = request.values['MediaUrl0']
+		f.write(requests.get(image_url).content)
+	db.insert_to_chat_messages(student_id, text, datetime.now(), True, False, True) # insert image url into chat_messages table
+
 def process_response(request):
 	if request.values.get('NumMedia', False):
 		phone = request.values['From']
-		text = request.values['Body']
+		text = request.values['Body'].strip()
+	
 		try:
 			# Check if user phone number exists and then let them add the image
-			student_id = db.get_student_id(phone)
-			if request.values['NumMedia'] != '0':
-				filename = request.values['MessageSid']+'.png'
-				text = "downloads/"+filename
-				with open('{}/{}'.format(keys['download_url'], filename), 'wb') as f:
-					image_url = request.values['MediaUrl0']
-					f.write(requests.get(image_url).content)
-				db.insert_to_chat_messages(student_id, text, datetime.now(), True, False, True) # insert image url into chat_messages table
-				send_message(phone, "Thanks for the image!")
+			student_id = db.get_student_id(phone) #Throws an error if such student doesn't exist.
+
+
+			#if this student has never sent a message before
+			if not db.get_all_chat_messages_with(student_id):
+				send_message(phone, "Hello. You can choose the following options:\n 1. Report\n 2. Chat with Pub Safety\n Please reply with the appropriate number...")
+			#_____________________________________
+			
+			#DEFAULT
+			is_report = False
+			is_sender = True
+			is_img = (request.values['NumMedia'] != '0')
+
+			if text == "1":
+				is_report = True
+				send_message(phone, "Ready to hear your report...")
+			elif text == "2":
+				send_message(phone, "Hi, how can public safety help you?")
+
 			else:
-				# This is the case when user sends just a text message and their phone number is registered in the database
-				pass
+				db.insert_to_chat_messages(student_id, text, datetime.now(), is_sender, is_report, is_img)
+				db.edit_unread_count(student_id, opr=1)
+
+			#_____________________________________
+			#processing the images sent via text message.
+			if is_img:
+				process_image(request)
 		except:
 			# In this case, user sent something but this phone number does not exist in the database
 			# ASK USER TO REGISTER WITH SEVERAL PROMPTS
 			if is_valid_email(text):
-				db.add_student_phone(text.lower(), phone)
+				db.edit_student_phone(text.lower(), phone)
+			else:
+				send_message(phone, "Your phone number is not in our database. Please reply with your valid email in order to register...")
+
 	else:
 		print("Waiting for the request")
 	return 1
