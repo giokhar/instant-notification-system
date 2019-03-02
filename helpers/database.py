@@ -146,6 +146,12 @@ def get_students_recent_messages_with_unread_count():
 		result = cursor.fetchall()
 	return result
 
+#student name, last name, message, sorted by time
+def get_all_reports():
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT students.first, students.last, chat_messages.message, chat_messages.time FROM students INNER JOIN chat_messages ON students.id=chat_messages.student_id WHERE chat_messages.is_report=1 ORDER BY time DESC")
+		result = cursor.fetchall()
+	return result
 
 #all given values are strings
 #Updates the data of a student with a given id.
