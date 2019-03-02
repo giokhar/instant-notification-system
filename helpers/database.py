@@ -1,6 +1,10 @@
 import json, pymysql
 
-connection = None
+connection = None #initial value.updated in restart_connection()
+# Get Configuration file keys.json and store values in the variable 'keys'
+try:keys = json.loads(open('helpers/keys.json').read())
+except:raise FileNotFoundError("Configuration file keys.json not found, contact the owner to get access!")
+
 #Is run in every function in this file,
 #to avoid the connection timeout 
 def restart_connection():
@@ -8,9 +12,6 @@ def restart_connection():
 
 	if connection != None and connection.open:
 		connection.close()
-	# Get Configuration file keys.json and store values in the variable 'keys'
-	try:keys = json.loads(open('helpers/keys.json').read())
-	except:raise FileNotFoundError("Configuration file keys.json not found, contact the owner to get access!")
 	#changing the global variable connection.
 	connection = pymysql.connect(keys['db_host'],keys['db_user'],keys['db_pass'],keys['db_name'])
 
@@ -18,7 +19,7 @@ def restart_connection():
 #If the tuples in the table contain one element,
 #this method converts the table into a list and returns that list.
 def format_sql_result(lst):
-	result = []
+	result = [] 
 	for next in lst:
 		result.append(next[0])
 	return result
