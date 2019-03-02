@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, render_template
 from flask_socketio import SocketIO
 # custom imports
-from helpers.twilio import process_response, send_mass_message
+from helpers.twilio import process_response, send_mass_message, send_chat_message
 from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with, get_students_recent_messages_with_unread_count, edit_unread_count
 from helpers.custom import format_floor_ids
 
@@ -68,8 +68,9 @@ def about_page():
 
 @socketio.on('my_event')
 def handle_my_custom_event(data, methods=['GET', 'POST']):
-    print('received my event: ' + str(data))
+    # print('received my event: ' + str(data))
     socketio.emit('message_sent', data)
+    send_chat_message(data['student_id'],data['message'])
 
 
 @app.route("/listener", methods=['GET', 'POST'])
