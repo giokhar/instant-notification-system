@@ -9,6 +9,7 @@ app = Flask(__name__, static_url_path='/static')
 socketio = SocketIO(app)
 
 def render_template_with_dict(template, extra):
+	"""Helper function to render a template using some common variables"""
 	common_dict = {}
 	return render_template(template, data={**common_dict, **extra})
 
