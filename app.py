@@ -57,9 +57,9 @@ def about_page():
 	return render_template('about.html')
 
 @socketio.on('my_event')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
-    print('received my event: ' + str(json))
-    socketio.emit('message_sent', json)
+def handle_my_custom_event(data, methods=['GET', 'POST']):
+    print('received my event: ' + str(data))
+    socketio.emit('message_sent', data)
 
 
 @app.route("/listener", methods=['GET', 'POST'])
