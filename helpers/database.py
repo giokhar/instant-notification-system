@@ -146,6 +146,7 @@ def get_students_recent_messages_with_unread_count():
 		result = cursor.fetchall()
 	return result
 
+
 #all given values are strings
 #Updates the data of a student with a given id.
 def edit_student(id, first, last, email, floor_id, phone):
@@ -155,6 +156,15 @@ def edit_student(id, first, last, email, floor_id, phone):
 
 		connection.commit()
 
+#Given a student_id and opr(operation type-> 0 - sets unread_count to 0, 1 - increments unread_count by1)
+#updates the unread_count from the table chats accordingly.
+def edit_unread_count(student_id, opr):
+	with connection.cursor() as cursor:
+		if (opr == 0):
+			cursor.execute("UPDATE chats SET unread_count=0 WHERE student_id=%s", (student_id,))
+		else:
+			cursor.execute("UPDATE chats SET unread_count=unread_count+1 WHERE student_id=%s", (student_id,))
+		connection.commit()
 
 #Adds the phone number of the student with a given email address.
 def add_student_phone(email, phone):
