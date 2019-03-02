@@ -31,7 +31,7 @@
 			                        Select Audience
 			                      </div>
 			                      <select class="select2-bg form-control" data-bgcolor="secondary" multiple="multiple" name="selected_audience" required>
-			                      	{% for aud, hall_name, floors in audience %}
+			                      	{% for aud, hall_name, floors in data['audience'] %}
 			                        	<option value="{{ aud }}">{{ hall_name }}</option>
 			                        	{% for floor in floors %}
 			                          		<option value="{{floor[0]}}">&nbsp;&nbsp;&nbsp;{{ hall_name }}, {{ floor[1] }}</option>
@@ -40,7 +40,7 @@
 			                      </select>
 			                    </div>
 				                <fieldset class="form-group">
-			                      <textarea class="form-control" id="basicTextarea" placeholder="Mass Message Text..." rows="4" name="message" required>{{ message_template }}</textarea>
+			                      <textarea class="form-control" id="basicTextarea" placeholder="Mass Message Text..." rows="4" name="message" required>{{ data['message_template'] }}</textarea>
 			                    </fieldset>
 					            <div class="text-right">
 					            	<a href="javascript:history.go(-1)" class="btn btn-secondary">Go Back </a>

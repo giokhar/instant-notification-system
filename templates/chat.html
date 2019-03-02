@@ -41,7 +41,7 @@
             </div>
           </a> -->
 
-          {% for student in students %}
+          {% for student in data['students'] %}
           <a href="/chat/{{ student[0] }}" class="media {%if request.path.split('/')[2]==student[0]%}bg-blue-grey bg-lighten-4 border-right-info border-right-2{%elif student[7]!=0%}bg-blue-grey bg-lighten-5 border-right-info border-right-2{%else%}border-0{% endif %}">
             <div class="media-left pr-1">
               <span class="avatar avatar-md">
@@ -84,7 +84,7 @@
                   />
                 </a>
               </div> -->
-              {% for message in messages %}
+              {% for message in data['messages'] %}
                 {% if message[2] %} <!-- This means if user is sending a message -->
                 <div class="chat chat-left">
                   <div class="chat-body">

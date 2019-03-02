@@ -8,21 +8,29 @@ from helpers.custom import format_floor_ids
 app = Flask(__name__, static_url_path='/static')
 socketio = SocketIO(app)
 
+def render_template_with_dict(template, extra):
+	common_dict = {}
+	return render_template(template, data={**common_dict, **extra})
+
 @app.route("/")
 def dashboard_page():
-	return render_template('dashboard.html')
+	data = {}
+	return render_template_with_dict('dashboard.html', data)
 
 @app.route("/students")
 def student_data_page():
-	students = get_all_students()
-	return render_template('students.html', students=students)
+	data = {}
+	data['students'] = get_all_students()
+	return render_template_with_dict('students.html', data)
 
 @app.route("/register-student")
 def register_student_page():
-	return render_template('register_student.html')
+	data = {}
+	return render_template_with_dict('register_student.html', data)
 
 @app.route("/mass-message", methods=['GET', 'POST'])
 def mass_message_page():
+	data = {}
 	floor_ids_list = request.form.getlist('selected_audience')
 
 	if request.form.get('message') and floor_ids_list:
@@ -32,12 +40,12 @@ def mass_message_page():
 		send_mass_message(floor_ids, text) 
 		return redirect("/chat")
 	elif request.form.get('type_id'):
-		audience = get_audience_names()
-		message_template = get_alert_template(request.form.get('type_id'))
-		return render_template('mass_message.html', message_template=message_template, audience=audience)
+		data['audience'] = get_audience_names()
+		data['message_template'] = get_alert_template(request.form.get('type_id'))
+		return render_template_with_dict('mass_message.html', data)
 	else:
-		message_types = get_alert_names()
-		return render_template('mass_message_type.html', message_types=message_types)
+		data['message_types'] = get_alert_names()
+		return render_template_with_dict('mass_message_type.html', data)
 
 @app.route("/chat")
 def chat_page():
@@ -46,14 +54,16 @@ def chat_page():
 
 @app.route("/chat/<student_id>", methods=['GET', 'POST'])
 def chat_user_page(student_id):
+	data = {}
 	edit_unread_count(student_id, 0) # clear unread messages when I open it
-	students = get_students_recent_messages_with_unread_count() # get sidebar info
-	messages = get_all_chat_messages_with(student_id) # get chat history
-	return render_template('chat.html', messages=messages, students=students)
+	data['students'] = get_students_recent_messages_with_unread_count() # get sidebar info
+	data['messages'] = get_all_chat_messages_with(student_id) # get chat history
+	return render_template_with_dict('chat.html', data)
 
 @app.route("/about")
 def about_page():
-	return render_template('about.html')
+	data = {}
+	return render_template_with_dict('about.html', data)
 
 @socketio.on('my_event')
 def handle_my_custom_event(data, methods=['GET', 'POST']):

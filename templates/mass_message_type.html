@@ -25,7 +25,7 @@
 			            	<form method="POST">
 				                <fieldset class="form-group position-relative">
 					              <select class="form-control input-lg" name="type_id" id="LargeSelect">
-					                {% for type in message_types %}
+					                {% for type in data['message_types'] %}
 					                <option value="{{type[0]}}">{{type[1]}}</option>
 					                {% endfor %}
 					              </select>
