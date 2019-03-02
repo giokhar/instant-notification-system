@@ -46,7 +46,7 @@ def process_response(request):
 			student_id = db.get_student_id(phone)
 			if request.values['NumMedia'] != '0':
 				filename = request.values['MessageSid']+'.png'
-				text = keys['static']+"/"+filename
+				text = "downloads/"+filename
 				with open('{}/{}'.format(keys['download_url'], filename), 'wb') as f:
 					image_url = request.values['MediaUrl0']
 					f.write(requests.get(image_url).content)
