@@ -10,15 +10,16 @@ $(document).ready(function(){
     	e.preventDefault();
     	var message = $("input[name=message]").val()
 		socket.emit( 'my_event', {
-	    	msg: message
+            student_id: $("input#student_id").val(),
+	    	message: message
 	    })
 	})
 
     socket.on( 'message_sent', function( data ){
     	$("input[name=message]").val("")
-    	$('.chats').append('<div class="chat"><div class="chat-body"><div class="chat-content"><p>'+data.msg+'</p></div></div></div>')
+    	$('.chats').append('<div class="chat"><div class="chat-body"><div class="chat-content"><p>'+data.message+'</p></div></div></div>')
     	$('.chat-app-window').scrollTop(Number.MAX_SAFE_INTEGER) // Always scroll down when message sent
-    	console.log(data)
+        console.log(data)
     })
 
     socket.on( 'message_received', function( data ){

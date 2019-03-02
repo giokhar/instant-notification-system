@@ -28,7 +28,7 @@ def send_mass_message(floor_ids, text):
 def send_chat_message(student_id, text):
 	receiver = db.get_student_phone(student_id)
 	send_message(receiver, text)
-	db.insert_to_chat_messages(student_id, text, datetime.now(), True, False, False)
+	db.insert_to_chat_messages(student_id, text, datetime.now(), False, False, False)
 
 #Reciever ex: '+12343423523'
 def send_message(receiver, text):
