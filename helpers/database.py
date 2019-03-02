@@ -181,6 +181,18 @@ def get_students_recent_messages_with_unread_count():
 		result = cursor.fetchall()
 	return result
 
+#uses get_students_recent_messages_with_unread_count() and
+#returns the table entries where undread_count is not 0.(there are some unread messages)
+def get_students_recent_messages_with_unread_messages():
+	table = get_students_recent_messages_with_unread_count()
+	result = []
+	unread_count_index = 7 #MAGIC NUM but needed
+	for next_tuple in table:
+		if next_tuple[unread_count_index] != 0:
+			result.append(next_tuple)
+	return result 
+
+print(get_students_recent_messages_with_unread_messages())
 #student name, last name, message, sorted by time
 def get_all_reports():
 	restart_connection()
