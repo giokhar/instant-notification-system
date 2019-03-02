@@ -193,7 +193,6 @@ def get_students_recent_messages_with_unread_messages():
 			result.append(next_tuple)
 	return result 
 
-print(get_students_recent_messages_with_unread_messages())
 #student name, last name, message, sorted by time
 def get_all_reports():
 	restart_connection()
