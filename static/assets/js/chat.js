@@ -1,6 +1,4 @@
-var url = 'http://' + document.domain + ':' + location.port;
-// console.log(url)
-url = "https://instant-notification-system.herokuapp.com";
+var url = 'https://' + document.domain + ':' + location.port;
 var socket = io.connect(url);
 
 $('.chat-app-window').scrollTop(Number.MAX_SAFE_INTEGER) // Default window scroll-down
