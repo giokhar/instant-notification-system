@@ -37,7 +37,7 @@ $(document).ready(function(){
 
         if (data.is_img == true){  // If message is sent, instead of writing URL, write image
             nice_message = "Image"
-            img_or_message = '<div class="chat-content" style="width:20%"><a href="{{{{request.url_root}}}}static/'+data.message+'" target="_blank"><img src="{{request.url_root}}static/'+data.message+'" width="100%"></a></div>'
+            img_or_message = '<div class="chat-content" style="width:20%"><a href="'+$("input#static_url").val()+'/'+data.message+'" target="_blank"><img src="'+$("input#static_url").val()+'/'+data.message+'" width="100%"></a></div>'
         }
         if (data.is_report == true) {
             img_or_message = '<div class="chat-content bg-danger bg-lighten-2"><p>'+data.message+'</p></div>' // report that shows up inside the chat
