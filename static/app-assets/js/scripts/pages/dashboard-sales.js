@@ -76,7 +76,7 @@
                 yAxes: [{
                     ticks: {
                         padding: 10,
-                        stepSize: 1,
+                        stepSize: Math.floor(Math.max(...non_report.data('values'))/10),
                         max: Math.max(...non_report.data('values'))+1,
                         min: 0,
                     },
@@ -135,7 +135,7 @@
                 yAxes: [{
                     ticks: {
                         padding: 10,
-                        stepSize: 1,
+                        stepSize: Math.floor(Math.max(...non_report.data('values'))/10),
                         max: Math.max(...non_report.data('values'))+1,
                         min: 0,
                     },
