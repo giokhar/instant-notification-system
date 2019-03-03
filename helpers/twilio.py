@@ -49,48 +49,44 @@ def process_response(request, socketio):
 	if request.values.get('NumMedia', False):
 		phone = request.values['From']
 		text = request.values['Body'].strip()
-		print(text)
-	
-		#try:
-		# Check if user phone number exists and then let them add the image
-		student_id = db.get_student_id(phone) #Throws an error if such student doesn't exist.
+
+		try:
+			# Check if user phone number exists and then let them add the image
+			student_id = db.get_student_id(phone) #Throws an error if such student doesn't exist.
 
 
-		#if this student has never sent a message before
-		if not db.get_all_chat_messages_with(student_id):
-			send_message(phone, "Hello. You can choose the following options:\n 1. Report\n 2. Chat with Pub Safety\n(Please reply with the appropriate number.)")
-		#_____________________________________
-		
-		#DEFAULT
-		is_report = False
-		is_sender = True
-		is_img = (request.values['NumMedia'] != '0')
+			#if this student has never sent a message before
+			if not db.get_all_chat_messages_with(student_id):
+				send_message(phone, "Hello. You can choose the following options:\n 1. Report\n 2. Chat with Pub Safety\n(Please reply with the appropriate number.)")
+			#_____________________________________
+			
+			#DEFAULT
+			is_report = False
+			is_sender = True
+			is_img = (request.values['NumMedia'] != '0')
 
-		if text == "1":
-			is_report = True
-			send_message(phone, "Ready to hear your report:")
-		elif text == "2":
-			send_message(phone, "Hi, how can public safety help you?")
-		elif is_img: #processing the images sent via text message.
-			filename = request.values['MessageSid']+'.png'
-			text = "downloads/"+filename
-			process_image(request, filename, student_id) # download image first
-			socketio.emit('message_received', {"student_id":student_id, "message":text, "name":db.get_student_name(student_id), "is_img":True}) # then emit the socket
-		else:
-			socketio.emit('message_received', {"student_id":student_id, "message":text, "name":db.get_student_name(student_id), "is_img":False}) # when regular text message is sent
-			db.insert_to_chat_messages(student_id, text, datetime.now(), is_sender, is_report, is_img)
-			print(request.path)
-			print(student_id)
-			db.edit_unread_count(student_id, opr=1)
-
-		# except:
-		# 	# In this case, user sent something but this phone number does not exist in the database
-		# 	# ASK USER TO REGISTER
-		# 	if is_valid_email(text):
-		# 		db.edit_student_phone(text.lower(), phone)
-		# 		send_message(phone, "Your phone number was successfully added to our database!")
-		# 	else:
-		# 		send_message(phone, "Your phone number is not in our database. Please reply with your valid email in order to register.")
+			if text == "1":
+				is_report = True
+				send_message(phone, "Ready to hear your report:")
+			elif text == "2":
+				send_message(phone, "Hi, how can public safety help you?")
+			elif is_img: #processing the images sent via text message.
+				filename = request.values['MessageSid']+'.png'
+				text = "downloads/"+filename
+				process_image(request, filename, student_id) # download image first
+				socketio.emit('message_received', {"student_id":student_id, "message":text, "name":db.get_student_name(student_id), "is_img":True}) # then emit the socket
+			else:
+				socketio.emit('message_received', {"student_id":student_id, "message":text, "name":db.get_student_name(student_id), "is_img":False}) # when regular text message is sent
+				db.insert_to_chat_messages(student_id, text, datetime.now(), is_sender, is_report, is_img)
+				db.edit_unread_count(student_id, opr=1)
+		except:
+			# In this case, user sent something but this phone number does not exist in the database
+			# ASK USER TO REGISTER
+			if is_valid_email(text):
+				db.edit_student_phone(text.lower(), phone)
+				send_message(phone, "Your phone number was successfully added to our database!")
+			else:
+				send_message(phone, "Your phone number is not in our database. Please reply with your valid email in order to register.")
 	return 1
 # method to check if given email is valid format
 # and check if such email is in our database
