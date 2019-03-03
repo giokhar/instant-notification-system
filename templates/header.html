@@ -16,7 +16,7 @@
           <ul class="nav navbar-nav float-right">
             <li class="dropdown dropdown-notification nav-item">
               <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-mail"></i>
-                <span class="badge badge-pill badge-default badge-warning badge-default badge-up badge-glow">{{data['unread_students']|length}}</span>
+                <span class="badge badge-pill badge-default badge-warning badge-default badge-up badge-glow" id="header-message-count">{{data['unread_students']|length}}</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                 <li class="dropdown-menu-header">
@@ -25,7 +25,7 @@
                   </h6>
                 </li>
                   <li class="scrollable-container media-list w-100 ps-container ps-theme-dark" data-ps-id="a8ba6310-7aaf-a8e0-4842-959ba0002a52" id="header-messages">
-                    {% if data['unread_students']|length==0 %}&nbsp;&nbsp;No unread messages<br><br>{%endif%}
+                    {% if data['unread_students']|length==0 %}<span id="no-unread-reader"><br>&nbsp;&nbsp;No unread messages<br><br></span>{%endif%}
                     {% for student in data['unread_students'] %}
                     <a href="/chat/{{student[0]}}">
                       <div class="media">
