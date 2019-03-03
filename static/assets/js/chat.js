@@ -69,6 +69,7 @@ $(document).ready(function(){
         student_messages = $('a[href^="/chat/'+data.student_id+'"]') // recreate student_messages object
         student_messages.find("div > p > span#messages-id-"+data.student_id).text(nice_message) // update message on the sidebar
         student_messages.find("div > h6 > span#message-time-"+data.student_id).text(getCurrentTime()) // update time with the current one
+
     })
 
 });
