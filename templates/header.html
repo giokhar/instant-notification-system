@@ -27,21 +27,21 @@
                   <li class="scrollable-container media-list w-100 ps-container ps-theme-dark" data-ps-id="a8ba6310-7aaf-a8e0-4842-959ba0002a52" id="header-messages">
                     {% if data['unread_students']|length==0 %}<span id="no-unread-reader"><br>&nbsp;&nbsp;No unread messages<br><br></span>{%endif%}
                     {% for student in data['unread_students'] %}
-                    <a href="/chat/{{student[0]}}">
-                      <div class="media">
-                        <div class="media-left">
-                          <span class="avatar avatar-sm avatar-online rounded-circle">
-                            <img src="{{ url_for('static', filename='app-assets/images/portrait/small/avatar-s-19.png') }}" alt="avatar"></span>
+                      <a href="/chat/{{student[0]}}">
+                        <div class="media">
+                          <div class="media-left">
+                            <span class="avatar avatar-sm avatar-online rounded-circle">
+                              <img src="{{ url_for('static', filename='app-assets/images/portrait/small/avatar-s-19.png') }}" alt="avatar"></span>
+                          </div>
+                          <div class="media-body">
+                            <h6 class="media-heading">{{student[1]}} {{student[2]}}</h6>
+                            <p class="notification-text font-small-3 text-muted">{{student[3]}}</p>
+                            <small>
+                              <time class="media-meta text-muted">{{student[8]}}</time>
+                            </small>
+                          </div>
                         </div>
-                        <div class="media-body">
-                          <h6 class="media-heading">{{student[1]}} {{student[2]}}</h6>
-                          <p class="notification-text font-small-3 text-muted">{{student[3]}}</p>
-                          <small>
-                            <time class="media-meta text-muted">{{student[8]}}</time>
-                          </small>
-                        </div>
-                      </div>
-                    </a>
+                      </a>
                     {% endfor %}
                   <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></li>
                 <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center" href="/chat">Read all messages</a></li>
@@ -50,7 +50,7 @@
             
             <li class="dropdown dropdown-notification nav-item">
               <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-bell"></i>
-                <span class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow report-num">{{data['today_reports']|length}}</span>
+                <span class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow report-num" id="header-report-count">{{data['today_reports']|length}}</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                 <li class="dropdown-menu-header">
@@ -58,21 +58,21 @@
                     <span class="grey darken-2">Reports Today</span>
                   </h6>
                 </li>
-                <li class="scrollable-container media-list w-100 ps-container ps-theme-dark" data-ps-id="81d859a4-ed89-5062-f715-20ac7979ebe4">
-                  {% if data['today_reports']|length==0 %}&nbsp;&nbsp;No reports<br><br>{%endif%}
+                <li class="scrollable-container media-list w-100 ps-container ps-theme-dark" data-ps-id="81d859a4-ed89-5062-f715-20ac7979ebe4" id="header-reports">
+                  {% if data['today_reports']|length==0 %}<span id="no-reports"><br>&nbsp;&nbsp;No reports<br><br></span>{%endif%}
                   {% for report in data['today_reports'] %}
-                  <a href="chat/{{report[0]}}">
-                    <div class="media">
-                      <div class="media-left align-self-center"><i class="ft-file icon-bg-circle bg-danger"></i></div>
-                      <div class="media-body">
-                        <h6 class="media-heading red darken-1">{{report[1]}} {{report[2]}}</h6>
-                        <p class="notification-text font-small-3 text-muted">{{ report[3] }}</p>
-                        <small>
-                          <time class="media-meta text-muted">{{report[4]}}</time>
-                        </small>
+                    <a href="/chat/{{report[0]}}">
+                      <div class="media">
+                        <div class="media-left align-self-center"><i class="ft-file icon-bg-circle bg-danger"></i></div>
+                        <div class="media-body">
+                          <h6 class="media-heading red darken-1">{{report[1]}} {{report[2]}}</h6>
+                          <p class="notification-text font-small-3 text-muted">{{ report[3] }}</p>
+                          <small>
+                            <time class="media-meta text-muted">{{report[4]}}</time>
+                          </small>
+                        </div>
                       </div>
-                    </div>
-                  </a>
+                    </a>
                   {% endfor %}
                 <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></li>
                 <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center" href="javascript:void(0)">Read all reports</a></li>
