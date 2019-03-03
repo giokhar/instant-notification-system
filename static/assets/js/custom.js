@@ -1,6 +1,5 @@
 var url = 'https://' + document.domain + ':' + location.port;
 var socket = io.connect(url);
-io.set('transports', ['websocket']);
 
 function getCurrentTime(){
     return new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
