@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template
 from flask_socketio import SocketIO
 # custom imports
 from helpers.twilio import process_response, send_mass_message, send_chat_message
-from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with, get_students_recent_messages_with_unread_count, edit_unread_count, get_students_recent_messages_with_unread_messages, get_all_reports, get_todays_reports
+from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with, get_students_recent_messages_with_unread_count, edit_unread_count, get_students_recent_messages_with_unread_messages, get_all_reports, get_todays_reports, get_all_mass_messages, format_data_floors
 from helpers.custom import format_floor_ids, format_data_times
 
 app = Flask(__name__, static_url_path='/static')
@@ -38,10 +38,9 @@ def mass_message_page():
 
 	if request.form.get('message') and floor_ids_list:
 		floor_ids = format_floor_ids(floor_ids_list)
-		print(floor_ids)
 		text = request.form.get('message')
 		send_mass_message(floor_ids, text) 
-		return redirect("/chat")
+		return redirect("/mass-history")
 	elif request.form.get('type_id'):
 		data['audience'] = get_audience_names()
 		data['message_template'] = get_alert_template(request.form.get('type_id'))
@@ -49,6 +48,12 @@ def mass_message_page():
 	else:
 		data['message_types'] = get_alert_names()
 		return render_template_with_dict('mass_message_type.html', data)
+
+@app.route("/mass-history")
+def mass_history_page():
+	data = {}
+	data['mass-messages'] = format_data_times(format_data_floors(get_all_mass_messages()), time_index=3)
+	return render_template_with_dict('mass-history.html', data)
 
 @app.route("/reports")
 def reports_page():

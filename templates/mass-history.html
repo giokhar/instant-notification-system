@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block body_template %}2-columns menu-expanded fixed-navbar{% endblock %}
+{% block content %}
+
+<div class="content-wrapper">
+    <div class="content-header row">
+      	<div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
+        	<h3 class="content-header-title mb-0 d-inline-block">Mass Messages</h3>
+        	<div class="row breadcrumbs-top d-inline-block">
+          		<div class="breadcrumb-wrapper col-12"></div>
+        	</div>
+      	</div>
+    </div>
+
+    <div class="content-body">
+    	<section class="row">
+			<div class="col-md-12 col-sm-12">
+			    <div id="with-header-border-0" class="card">
+			        <div class="card-header">
+			            <h4 class="card-title">History of mass messages</h4>
+			            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+			            <div class="heading-elements">
+			                <ul class="list-inline mb-0">
+			                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+			                </ul>
+			            </div>
+			        </div>
+			        <div class="card-content collapse show">
+			            <div class="card-body">
+		                    <div class="list-group">
+		                    	{% for mass_message in data['mass-messages'] %}
+			                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+			                        <div class="d-flex w-100 justify-content-between">
+			                          <h5 class="text-bold-600">{{mass_message[2]}}</h5>
+			                          <small class="text-muted">{{mass_message[3]}}</small>
+			                        </div>
+			                        <p>{% for item in mass_message[1]%}{{item[0]}}-{{item[1]}}.  {%endfor%}</p>
+			                      </a>
+			                    {% endfor %}
+		                    </div>
+		                </div>
+			        </div>
+			    </div>
+			</div>
+		</section>
+    </div>
+</div>
+{% endblock %}

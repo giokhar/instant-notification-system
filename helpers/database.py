@@ -34,6 +34,15 @@ def listify(tpl):
 		result.append(list(next))
 	return result
 
+# HELPER FUNCTION
+# return a formated floors 
+# using get_floor_names_by_floor_ids
+def format_data_floors(list_of_data, floors_index=1):
+	for data in list_of_data:
+		floor_ids = data[floors_index]
+		data[floors_index] = get_floor_names_by_floor_ids(floor_ids)
+	return list_of_data
+
 #GET FUNCTIONS
 #Is given a string containing floor_ids and returns a list of 
 #phone numbers(strings, ex : '+123213124') of students living on those floors.
@@ -124,7 +133,7 @@ def get_floor_names_by_floor_ids(floor_ids):
 		format_strings = ','.join(['%s'] * len(floor_ids))
 
 		cursor.execute("SELECT halls.name, floors.name FROM floors INNER JOIN halls ON floors.hall_id=halls.id WHERE floors.id IN (%s)" % format_strings, tuple(floor_ids))
-		result = cursor.fetchall()
+		result = listify(cursor.fetchall())
 
 	return result
 
@@ -177,7 +186,7 @@ def get_all_mass_messages():
 
 	with connection.cursor() as cursor:
 		cursor.execute("SELECT * FROM mass_messages ORDER BY time ASC")
-		result = cursor.fetchall()
+		result = listify(cursor.fetchall())
 
 	return result
 

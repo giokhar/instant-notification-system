@@ -11,7 +11,13 @@
             </li>
           </ul>
         </li>
-        <li class="{%if request.path=='/mass-message'%}active{% endif %} nav-item"><a href="/mass-message"><i class="la la-envelope"></i><span class="menu-title">Mass Message</span></a>
+        <li class=" nav-item"><a href="#"><i class="la la-envelope"></i><span class="menu-title">Mass Messages</span></a>
+          <ul class="menu-content">
+            <li class="{%if request.path=='/mass-message'%}active{% endif %} nav-item"><a href="/mass-message"><i class="la la-paper-plane"></i><span class="menu-title">Send a Message</span></a>
+            </li>
+            <li class="{%if request.path=='/mass-history'%}active{% endif %} nav-item"><a href="/mass-history"><i class="la la-history"></i><span class="menu-title">History</span></a>
+        </li>
+          </ul>
         </li>
         <li class="{%if request.path=='/reports'%}active{% endif %} nav-item"><a href="/reports"><i class="la la-file"></i><span class="menu-title">Student Reports</span></a>
         </li>
