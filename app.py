@@ -50,6 +50,12 @@ def mass_message_page():
 		data['message_types'] = get_alert_names()
 		return render_template_with_dict('mass_message_type.html', data)
 
+@app.route("/reports")
+def reports_page():
+	data = {}
+	data['reports'] = format_data_times(get_all_reports(), time_index=4)
+	return render_template_with_dict('reports.html', data)
+
 @app.route("/chat")
 def chat_page():
 	student_id = 1

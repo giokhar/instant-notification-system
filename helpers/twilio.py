@@ -57,7 +57,7 @@ def process_response(request, socketio):
 
 			#if this student has never sent a message before
 			if not db.get_all_chat_messages_with(student_id):
-				send_message(phone, "Hello, You can report or talk to public safety:\n report format: '$MY REPORT'\n")
+				send_message(phone, "Hello, You can report or talk to public safety.\nYour report should be in the following format: \n$MY REPORT")
 			#_____________________________________
 			
 			#DEFAULT
