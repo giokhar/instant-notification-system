@@ -14,8 +14,7 @@ def format_floor_ids(floor_ids_list):
 
 	return ".".join(result)
 
-def format_data_times(list_of_data):
-	time_index = 8 #Needed Wildcard 
+def format_data_times(list_of_data, time_index=8):# time_index Needed Wildcard 
 	for data in list_of_data:
 		my_time = data[time_index]
 		date_diff = (datetime.now().date()-my_time.date()).days

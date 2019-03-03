@@ -72,6 +72,10 @@
                       <div class="chat-content" style="width:20%">
                         <a href="../static/{{message[1]}}" target="_blank"><img src="../static/{{message[1]}}" width="100%"></a>
                       </div>
+                    {% elif message[4] %} <!-- if this is a report -->
+                      <div class="chat-content bg-danger bg-lighten-2">
+                        <p>{{message[1]}}</p>
+                      </div>
                     {% else %} <!--if it is a regular text-->
                       <div class="chat-content">
                         <p>{{message[1]}}</p>

@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template
 from flask_socketio import SocketIO
 # custom imports
 from helpers.twilio import process_response, send_mass_message, send_chat_message
-from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with, get_students_recent_messages_with_unread_count, edit_unread_count, get_students_recent_messages_with_unread_messages
+from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with, get_students_recent_messages_with_unread_count, edit_unread_count, get_students_recent_messages_with_unread_messages, get_all_reports
 from helpers.custom import format_floor_ids, format_data_times
 
 app = Flask(__name__, static_url_path='/static')
@@ -12,6 +12,8 @@ def render_template_with_dict(template, extra):
 	"""Helper function to render a template using some common variables"""
 	common_dict = {}
 	common_dict['unread_students'] = format_data_times(get_students_recent_messages_with_unread_messages())
+	common_dict['reports'] = format_data_times(get_all_reports(), time_index=4)
+	print(common_dict['reports'])
 	return render_template(template, data={**common_dict, **extra})
 
 @app.route("/")

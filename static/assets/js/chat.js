@@ -39,6 +39,9 @@ $(document).ready(function(){
             nice_message = "Image"
             img_or_message = '<div class="chat-content" style="width:20%"><a href="../static/'+data.message+'" target="_blank"><img src="../static/'+data.message+'" width="100%"></a></div>'
         }
+        if (data.is_report == true) {
+            img_or_message = '<div class="chat-content bg-danger bg-lighten-2"><p>'+data.message+'</p></div>' // report that shows up inside the chat
+        }
 
         if (student_messages.text() == ""){
             // CASE WHEN STUDENT DOES NOT EXIST IN THE TAB
@@ -47,7 +50,9 @@ $(document).ready(function(){
         }
         else if ($("input#student_id").val() == data.student_id) {
             // CASE WHEN STUDENT EXISTS AND OPEN
-            $('.chats').append('<div class="chat chat-left"><div class="chat-body">'+img_or_message+'</div></div>') // add message on the left side of that chatroom
+            if (data.is_report == true){
+                $('.chats').append('<div class="chat chat-left"><div class="chat-body">'+img_or_message+'</div></div>') // add message on the left side of that chatroom
+            }else {$('.chats').append('<div class="chat chat-left"><div class="chat-body">'+img_or_message+'</div></div>')}
             $('.chat-app-window').scrollTop(Number.MAX_SAFE_INTEGER) // Always scroll down when message sent
         }
         else {

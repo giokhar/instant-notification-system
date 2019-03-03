@@ -165,7 +165,7 @@ def get_all_chat_messages_with(student_id):
 	restart_connection()
 
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT student_id, message, is_sender, is_img, time FROM chat_messages WHERE student_id=%s ORDER BY time ASC", (student_id,))
+		cursor.execute("SELECT student_id, message, is_sender, is_img, is_report, time FROM chat_messages WHERE student_id=%s ORDER BY time ASC", (student_id,))
 		result = cursor.fetchall()
 	return result
 
@@ -217,8 +217,8 @@ def get_all_reports():
 	restart_connection()
 
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT students.first, students.last, chat_messages.message, chat_messages.time FROM students INNER JOIN chat_messages ON students.id=chat_messages.student_id WHERE chat_messages.is_report=1 ORDER BY time DESC")
-		result = cursor.fetchall()
+		cursor.execute("SELECT students.id, students.first, students.last, chat_messages.message, chat_messages.time FROM students INNER JOIN chat_messages ON students.id=chat_messages.student_id WHERE chat_messages.is_report=1 ORDER BY time DESC")
+		result = listify(cursor.fetchall())
 	return result
 
 #all given values are strings

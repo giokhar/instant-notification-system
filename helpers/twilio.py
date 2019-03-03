@@ -57,7 +57,7 @@ def process_response(request, socketio):
 
 		#if this student has never sent a message before
 		if not db.get_all_chat_messages_with(student_id):
-			send_message(phone, "Hello. You can choose the following options:\n 1. Report\n 2. Chat with Pub Safety\n(Please reply with the appropriate number.)")
+			send_message(phone, "Hello, You can report or talk to public safety:\n report format: '$MY REPORT'\n")
 		#_____________________________________
 		
 		#DEFAULT
@@ -65,17 +65,21 @@ def process_response(request, socketio):
 		is_sender = True
 		is_img = (request.values['NumMedia'] != '0')
 
-		if text == "1":
+		if text[0] == "$":
 			is_report = True
-			send_message(phone, "Ready to hear your report:")
-		elif text == "2":
-			send_message(phone, "Hi, how can public safety help you?")
-		elif is_img: #processing the images sent via text message.
+			text=text[1:]
+			send_message(phone, "Thank you for your report!")
+
+		if is_img: #processing the images sent via text message.
 			filename = request.values['MessageSid']+'.png'
 			text = "downloads/"+filename
 			process_image(request, filename, student_id) # download image first
 			socketio.emit('message_received', {"student_id":student_id, "message":text, "name":db.get_student_name(student_id), "is_img":is_img, "is_report":is_report}) # then emit the socket
 			socketio.emit('add_message_to_header', {"student_id":student_id, "message":"Image", "name":db.get_student_name(student_id) }) # add message to the header panel
+		elif is_report: # processing reports
+			socketio.emit('message_received', {"student_id":student_id, "message":text, "name":db.get_student_name(student_id), "is_img":is_img, "is_report":is_report}) # when regular text message is sent
+			db.insert_to_chat_messages(student_id, text, datetime.now(), is_sender, is_report, is_img)
+			db.edit_unread_count(student_id, opr=1)
 		else:
 			socketio.emit('message_received', {"student_id":student_id, "message":text, "name":db.get_student_name(student_id), "is_img":is_img, "is_report":is_report}) # when regular text message is sent
 			socketio.emit('add_message_to_header', {"student_id":student_id, "message":text, "name":db.get_student_name(student_id)})
