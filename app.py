@@ -3,7 +3,7 @@ from flask_socketio import SocketIO
 # custom imports
 from helpers.twilio import process_response, send_mass_message, send_chat_message
 from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with, get_students_recent_messages_with_unread_count, edit_unread_count
-from helpers.custom import format_floor_ids
+from helpers.custom import format_floor_ids, format_data_times
 
 app = Flask(__name__, static_url_path='/static')
 socketio = SocketIO(app)
@@ -59,7 +59,8 @@ def chat_page():
 def chat_user_page(student_id):
 	data = {}
 	edit_unread_count(student_id, 0) # clear unread messages when I open it
-	data['students'] = get_students_recent_messages_with_unread_count() # get sidebar info
+	messages_with_unread_count = get_students_recent_messages_with_unread_count() # get sidebar info
+	data['students'] = format_data_times(messages_with_unread_count) # get sidebar info formated dates
 	data['messages'] = get_all_chat_messages_with(student_id) # get chat history
 	return render_template_with_dict('chat.html', data)
 
@@ -72,7 +73,7 @@ def about_page():
 def handle_my_custom_event(data, methods=['GET', 'POST']):
     print('received my event: ' + str(data))
     socketio.emit('message_sent', data)
-    # send_chat_message(data['student_id'],data['message'])
+    send_chat_message(data['student_id'],data['message'])
 
 
 @app.route("/listener", methods=['GET', 'POST'])
