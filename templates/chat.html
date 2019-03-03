@@ -64,13 +64,13 @@
                   />
                 </a>
               </div> -->
-              {% for message in data['messages'] %}
+              {% for message in data['messages'] %}te
                 {% if message[2] %} <!-- This means if user is sending a message -->
                 <div class="chat chat-left">
                   <div class="chat-body">
                     {% if message[3] %} <!-- if that message is an image -->
                       <div class="chat-content" style="width:20%">
-                        <a href="../static/{{message[1]}}" target="_blank"><img src="../static/{{message[1]}}" width="100%"></a>
+                        <a href="../static/{{message[1]}}" target="_blank"><img src="../static/{{message[1]}}" onload="this.style.display='block'" width="100%"></a>
                       </div>
                     {% elif message[4] %} <!-- if this is a report -->
                       <div class="chat-content bg-danger bg-lighten-2">
