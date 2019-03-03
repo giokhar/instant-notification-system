@@ -1,4 +1,4 @@
-import json, pymysql
+import json, pymysql, datetime
 
 connection = None #initial value.updated in restart_connection()
 # Get Configuration file keys.json and store values in the variable 'keys'
@@ -218,6 +218,15 @@ def get_all_reports():
 
 	with connection.cursor() as cursor:
 		cursor.execute("SELECT students.id, students.first, students.last, chat_messages.message, chat_messages.time FROM students INNER JOIN chat_messages ON students.id=chat_messages.student_id WHERE chat_messages.is_report=1 ORDER BY time DESC")
+		result = listify(cursor.fetchall())
+	return result
+
+#get today's reports only sstudent name, last name, message, sorted by time
+def get_todays_reports():
+	restart_connection()
+
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT students.id, students.first, students.last, chat_messages.message, chat_messages.time FROM students INNER JOIN chat_messages ON students.id=chat_messages.student_id WHERE chat_messages.is_report=1 AND CONVERT(chat_messages.time, DATE)=CONVERT('"+str(datetime.datetime.now())+"', DATE) ORDER BY time DESC")
 		result = listify(cursor.fetchall())
 	return result
 
