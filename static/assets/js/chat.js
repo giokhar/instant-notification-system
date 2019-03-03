@@ -52,7 +52,7 @@ $(document).ready(function(){
         }
         else {
             // CASE WHEN STUDENT EXISTS BUT NOT OPEN
-            student_messages
+            student_messages.attr('class', 'media bg-blue-grey bg-lighten-5 border-right-info border-right-2')
             let unread_wrap = student_messages.find("div > p > span#unread-wrap-"+data.student_id)
             if (unread_wrap.html().trim().length == 0){
                 unread_wrap.html('<span class="badge badge-pill badge-dark" id="unread-count-'+data.student_id+'">1</span>')
