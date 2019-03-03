@@ -24,17 +24,17 @@
                     <span class="grey darken-2">Messages</span>
                   </h6>
                 </li>
-                  <li class="scrollable-container media-list w-100 ps-container ps-theme-dark" data-ps-id="a8ba6310-7aaf-a8e0-4842-959ba0002a52">
+                  <li class="scrollable-container media-list w-100 ps-container ps-theme-dark" data-ps-id="a8ba6310-7aaf-a8e0-4842-959ba0002a52" id="header-messages">
                     {% if data['unread_students']|length==0 %}&nbsp;&nbsp;No unread messages<br><br>{%endif%}
                     {% for student in data['unread_students'] %}
                     <a href="/chat/{{student[0]}}">
                       <div class="media">
                         <div class="media-left">
                           <span class="avatar avatar-sm avatar-online rounded-circle">
-                            <img src="{{ url_for('static', filename='app-assets/images/portrait/small/avatar-s-19.png') }}" alt="avatar"><i></i></span>
+                            <img src="{{ url_for('static', filename='app-assets/images/portrait/small/avatar-s-19.png') }}" alt="avatar"></span>
                         </div>
                         <div class="media-body">
-                          <h6 class="media-heading">{{student[1]}} {{student[2]}} </h6>
+                          <h6 class="media-heading">{{student[1]}} {{student[2]}}</h6>
                           <p class="notification-text font-small-3 text-muted">{{student[3]}}</p>
                           <small>
                             <time class="media-meta text-muted">{{student[8]}}</time>

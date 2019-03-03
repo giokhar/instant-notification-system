@@ -22,7 +22,7 @@
       <div id="users-list" class="list-group position-relative">
         <div class="users-list-padding media-list" id="student_messages">
           {% for student in data['students'] %}
-          <a href="/chat/{{ student[0] }}" class="media {%if request.path.split('/')[2]==student[0]%}bg-blue-grey bg-lighten-4 border-right-info border-right-2{%elif student[7]!=0%}bg-blue-grey bg-lighten-5 border-right-info border-right-2{%else%}border-0{% endif %}">
+          <a href="/chat/{{ student[0] }}" class="media {%if request.path.split('/')[2]==student[0]%}bg-blue-grey bg-lighten-4 border-right-info border-right-2{%elif student[7]!=0%}bg-blue-grey bg-lighten-5 border-right-info border-right-2{%else%}border-0{% endif %}" id="student-message-{{student[0]}}">
             <div class="media-left pr-1">
               <span class="avatar avatar-md">
                 <img class="media-object rounded-circle" src="{{ url_for('static', filename='app-assets/images/portrait/small/avatar-s-3.png') }}"

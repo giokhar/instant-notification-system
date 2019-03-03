@@ -31,7 +31,7 @@ $(document).ready(function(){
     })
 
     socket.on( 'message_received', function( data ){
-        let student_messages = $('a[href^="/chat/'+data.student_id+'"]') // sidebar object
+        let student_messages = $('#student-message-'+data.student_id) // sidebar object
         let nice_message = data.message; // message that goes on the side panel
         let img_or_message = '<div class="chat-content"><p>'+data.message+'</p></div>' // message that shows up inside the chat
 
@@ -45,7 +45,7 @@ $(document).ready(function(){
 
         if (student_messages.text() == ""){
             // CASE WHEN STUDENT DOES NOT EXIST IN THE TAB
-            student_messages = '<a href="/chat/'+data.student_id+'" class="media bg-blue-grey bg-lighten-5 border-right-info border-right-2"><div class="media-left pr-1"><span class="avatar avatar-md"><img class="media-object rounded-circle" src="../static/app-assets/images/portrait/small/avatar-s-3.png"alt="Generic placeholder image"></span></div><div class="media-body w-100"><h6 class="list-group-item-heading">'+data.name+'<span class="font-small-3 float-right info message-time" id="message-time-'+data.student_id+'">'+getCurrentTime()+'</span></h6><p class="list-group-item-text text-muted mb-0"><span id="messages-id-'+data.student_id+'">'+nice_message+'</span><span class="float-right primary" id="unread-wrap-'+data.student_id+'"><span class="badge badge-pill badge-dark" id="unread-count-'+data.student_id+'">1</span></span></p></div></a>'; // student messages that were not in the chat before
+            student_messages = '<a href="/chat/'+data.student_id+'" class="media bg-blue-grey bg-lighten-5 border-right-info border-right-2" id="student-message-'+data.student_id+'"><div class="media-left pr-1"><span class="avatar avatar-md"><img class="media-object rounded-circle" src="../static/app-assets/images/portrait/small/avatar-s-3.png"alt="Generic placeholder image"></span></div><div class="media-body w-100"><h6 class="list-group-item-heading">'+data.name+'<span class="font-small-3 float-right info message-time" id="message-time-'+data.student_id+'">'+getCurrentTime()+'</span></h6><p class="list-group-item-text text-muted mb-0"><span id="messages-id-'+data.student_id+'">'+nice_message+'</span><span class="float-right primary" id="unread-wrap-'+data.student_id+'"><span class="badge badge-pill badge-dark" id="unread-count-'+data.student_id+'">1</span></span></p></div></a>'; // student messages that were not in the chat before
 
         }
         else if ($("input#student_id").val() == data.student_id) {
@@ -71,7 +71,7 @@ $(document).ready(function(){
         }
         $('#student_messages').prepend(student_messages) // Prepend user messages on top of the list
 
-        student_messages = $('a[href^="/chat/'+data.student_id+'"]') // recreate student_messages object
+        student_messages = $('#student-message-'+data.student_id) // recreate student_messages object
         student_messages.find("div > p > span#messages-id-"+data.student_id).text(nice_message) // update message on the sidebar
         student_messages.find("div > h6 > span#message-time-"+data.student_id).text(getCurrentTime()) // update time with the current one
 
