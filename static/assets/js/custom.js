@@ -1,4 +1,5 @@
 var url = 'http://' + document.domain + ':' + location.port;
+url = "https://instant-notification-system.herokuapp.com";
 var socket = io.connect(url);
 
 function getCurrentTime(){
