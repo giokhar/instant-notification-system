@@ -10,10 +10,6 @@ function getCurrentTime(){
 
 $(document).ready(function(){
 
-    if ($('a[href^="/chat/2"]').text() == ""){
-        console.log("Ar arsebobs es chemisa")
-    }
-
 	var form = $( 'form' ).on( 'submit', function(e) {
     	e.preventDefault();
     	var message = $("input[name=message]").val()
@@ -35,24 +31,44 @@ $(document).ready(function(){
     })
 
     socket.on( 'message_received', function( data ){
-        // CHECK if user exists, chat open, chat closed
-        let student_messages = $('a[href^="/chat/'+data.student_id+'"]')
+        let student_messages = $('a[href^="/chat/'+data.student_id+'"]') // sidebar object
+        let nice_message = data.message; // message that goes on the side panel
+        let img_or_message = '<div class="chat-content"><p>'+data.message+'</p></div>' // message that shows up inside the chat
+
+        if (data.is_img == true){  // If message is sent, instead of writing URL, write image
+            nice_message = "Image"
+            img_or_message = '<div class="chat-content" style="width:20%"><a href="../static/'+data.message+'" target="_blank"><img src="../static/'+data.message+'" width="100%"></a></div>'
+        }
+
         if (student_messages.text() == ""){
             // CASE WHEN STUDENT DOES NOT EXIST IN THE TAB
-            console.log(data)
+            student_messages = '<a href="/chat/'+data.student_id+'" class="media bg-blue-grey bg-lighten-5 border-right-info border-right-2"><div class="media-left pr-1"><span class="avatar avatar-md"><img class="media-object rounded-circle" src="../static/app-assets/images/portrait/small/avatar-s-3.png"alt="Generic placeholder image"></span></div><div class="media-body w-100"><h6 class="list-group-item-heading">'+data.name+'<span class="font-small-3 float-right info message-time" id="message-time-'+data.student_id+'">'+getCurrentTime()+'</span></h6><p class="list-group-item-text text-muted mb-0"><span id="messages-id-'+data.student_id+'">'+nice_message+'</span><span class="float-right primary" id="unread-wrap-'+data.student_id+'"><span class="badge badge-pill badge-dark" id="unread-count-'+data.student_id+'">1</span></span></p></div></a>'; // student messages that were not in the chat before
+
         }
         else if ($("input#student_id").val() == data.student_id) {
             // CASE WHEN STUDENT EXISTS AND OPEN
-            console.log("Your student message tab is open")
+            $('.chats').append('<div class="chat chat-left"><div class="chat-body">'+img_or_message+'</div></div>') // add message on the left side of that chatroom
+            $('.chat-app-window').scrollTop(Number.MAX_SAFE_INTEGER) // Always scroll down when message sent
         }
         else {
             // CASE WHEN STUDENT EXISTS BUT NOT OPEN
-            console.log("Your student message tab is not open")
+            student_messages
+            let unread_wrap = student_messages.find("div > p > span#unread-wrap-"+data.student_id)
+            if (unread_wrap.html().trim().length == 0){
+                unread_wrap.html('<span class="badge badge-pill badge-dark" id="unread-count-'+data.student_id+'">1</span>')
+            }
+            else {
+                let unread_count = unread_wrap.find("span#unread-count-"+data.student_id)
+                unread_count.html(Number(unread_count.html())+1) // increase unread count
+            }
+            // let unread_count = student_messages.find("div > p > span > span#unread-count-"+data.student_id) //get unread_count element
+            
         }
-        // $('#student_messages').prepend(student_messages) // Prepend user messages on top of the list
-        // student_messages.find("div > p > span#messages-id-"+data.student_id).text(data.message)
-        // let unread_count = student_messages.find("div > p > span > span#unread_count-"+data.student_id)
-        // unread_count.html(Number(unread_count.html())+1)
+        $('#student_messages').prepend(student_messages) // Prepend user messages on top of the list
+
+        student_messages = $('a[href^="/chat/'+data.student_id+'"]') // recreate student_messages object
+        student_messages.find("div > p > span#messages-id-"+data.student_id).text(nice_message) // update message on the sidebar
+        student_messages.find("div > h6 > span#message-time-"+data.student_id).text(getCurrentTime()) // update time with the current one
     })
 
 });

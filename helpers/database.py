@@ -242,7 +242,6 @@ def edit_unread_count(student_id, opr):
 			cursor.execute("UPDATE chats SET unread_count=0 WHERE student_id=%s", (student_id,))
 		else:
 			cursor.execute("UPDATE chats SET unread_count=unread_count+1 WHERE student_id=%s", (student_id,))
-		connection.commit()
 
 #Updates the phone number of the student with a given email address.
 def edit_student_phone(email, phone):
