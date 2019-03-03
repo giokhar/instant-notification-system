@@ -32,7 +32,7 @@
             </div>
             <div class="media-body w-100">
               <h6 class="list-group-item-heading">{{ student[1] }} {{ student[2] }}
-                <span class="font-small-3 float-right info">{{ student[8] }}</span>
+                <span class="font-small-3 float-right info" id="message-time-{{student[0]}}">{{ student[8] }}</span>
               </h6>
               <p class="list-group-item-text text-muted mb-0">
                 <span id="messages-id-{{student[0]}}">{%if student[6]%}Image{%else%}{{ student[3] }}{%endif%}</span>
