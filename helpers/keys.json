@@ -1,0 +1,10 @@
+{
+	"account_sid":"AC4f910e94d07ad52bbeda804b0508f2eb",
+	"auth_token":"0c658fabe679cfdd4babc69994c8216a",
+	"phone_number":"+14849993299",
+	"db_host":"giokhar.com",
+	"db_name":"giokharc_instant_notification_system",
+	"db_user":"giokharc_ins",
+	"db_pass":"12345678",
+	"download_url": "static/downloads"
+}
