@@ -18,7 +18,7 @@ def format_data_times(list_of_data):
 	time_index = 8 #Needed Wildcard 
 	for data in list_of_data:
 		my_time = data[time_index]
-		date_diff = (my_time.date()-datetime.now().date()).days
+		date_diff = (datetime.now().date()-my_time.date()).days
 		if date_diff == 0:
 			format = "%-I:%M %p" # 2:15 pm
 		elif date_diff < 7:
