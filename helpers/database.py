@@ -206,9 +206,10 @@ def get_students_recent_messages_with_unread_count():
 def get_students_recent_messages_with_unread_messages():
 	table = get_students_recent_messages_with_unread_count()
 	result = []
+	is_report_index = 5 #MAGIC NUM but needed
 	unread_count_index = 7 #MAGIC NUM but needed
 	for next_tuple in table:
-		if next_tuple[unread_count_index] != 0:
+		if next_tuple[unread_count_index] != 0 and next_tuple[is_report_index] != 1: #filter out read and report messages 
 			result.append(next_tuple)
 	return result 
 
