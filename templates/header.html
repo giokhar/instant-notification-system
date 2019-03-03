@@ -26,21 +26,24 @@
                   <span class="notification-tag badge badge-default badge-warning float-right m-0">4 New</span>
                 </li>
                   <li class="scrollable-container media-list w-100 ps-container ps-theme-dark" data-ps-id="a8ba6310-7aaf-a8e0-4842-959ba0002a52">
-                    <a href="javascript:void(0)">
+                    {% if data['unread_students']|length==0 %}&nbsp;&nbsp;No unread messages<br><br>{%endif%}
+                    {% for student in data['unread_students'] %}
+                    <a href="/chats/{{student[0]}}">
                       <div class="media">
                         <div class="media-left">
                           <span class="avatar avatar-sm avatar-online rounded-circle">
                             <img src="{{ url_for('static', filename='app-assets/images/portrait/small/avatar-s-19.png') }}" alt="avatar"><i></i></span>
                         </div>
                         <div class="media-body">
-                          <h6 class="media-heading">Margaret Govan</h6>
-                          <p class="notification-text font-small-3 text-muted">I like your portfolio, let's start.</p>
+                          <h6 class="media-heading">{{student[1]}} {{student[2]}} <span class="badge badge-pill badge-default badge-warning badge-default">{{student[7]}}</span></h6>
+                          <p class="notification-text font-small-3 text-muted">{{student[3]}}</p>
                           <small>
-                            <time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">Today</time>
+                            <time class="media-meta text-muted">{{student[8]}}</time>
                           </small>
                         </div>
                       </div>
                     </a>
+                    {% endfor %}
                   <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></li>
                 <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center" href="javascript:void(0)">Read all messages</a></li>
               </ul>
