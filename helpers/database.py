@@ -43,6 +43,14 @@ def format_data_floors(list_of_data, floors_index=1):
 		data[floors_index] = get_floor_names_by_floor_ids(floor_ids)
 	return list_of_data
 
+def get_chart_data(is_report=1):
+	restart_connection()
+	sql = "SELECT DATE_FORMAT(week.day,'%a'), COUNT(cm.id) FROM (SELECT CURDATE() AS day UNION SELECT CURDATE() - INTERVAL 1 DAY UNION SELECT CURDATE() - INTERVAL 2 DAY UNION SELECT CURDATE() - INTERVAL 3 DAY UNION SELECT CURDATE() - INTERVAL 4 DAY UNION SELECT CURDATE() - INTERVAL 5 DAY UNION SELECT CURDATE() - INTERVAL 6 DAY) AS week LEFT JOIN (SELECT * FROM chat_messages WHERE is_report="+str(is_report)+") cm ON DATE(week.day)=DATE(cm.time) GROUP BY week.day ORDER BY week.day ASC"
+	with connection.cursor() as cursor:
+		cursor.execute(sql)
+		result = listify(cursor.fetchall())
+	return result
+
 #GET FUNCTIONS
 #Is given a string containing floor_ids and returns a list of 
 #phone numbers(strings, ex : '+123213124') of students living on those floors.
