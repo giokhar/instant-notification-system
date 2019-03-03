@@ -118,6 +118,15 @@ def get_floor_names_by_floor_ids(floor_ids):
 
 	return result
 
+#Given the student_id returns the full name of this student.
+def get_student_name(student_id):
+	restart_connection()
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT first, last FROM students WHERE id=%s", (student_id,))
+		name = cursor.fetchone() #This returns a tuple of first and last name.
+
+	return name[0]+" "+name[1]
+	
 #Given the student_id returns the phone number of this student.
 def get_student_phone(student_id):
 	restart_connection()

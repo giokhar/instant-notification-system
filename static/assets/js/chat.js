@@ -4,6 +4,10 @@ var socket = io.connect(url);
 $('.chat-app-window').scrollTop(Number.MAX_SAFE_INTEGER) // Default window scroll-down
 $("input[name=message]").focus()
 
+function (datetime){
+    // Format datetime here
+}
+
 $(document).ready(function(){
 
 	var form = $( 'form' ).on( 'submit', function(e) {
