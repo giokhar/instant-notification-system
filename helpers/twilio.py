@@ -57,7 +57,7 @@ def process_response(request, socketio):
 
 			#if this student has never sent a message before
 			if not db.get_all_chat_messages_with(student_id):
-				send_message(phone, "Hello. You can choose the following options:\n 1. Report\n 2. Chat with Pub Safety\n Please reply with the appropriate number...")
+				send_message(phone, "Hello. You can choose the following options:\n 1. Report\n 2. Chat with Pub Safety\n(Please reply with the appropriate number.)")
 			#_____________________________________
 			
 			#DEFAULT
@@ -67,7 +67,7 @@ def process_response(request, socketio):
 
 			if text == "1":
 				is_report = True
-				send_message(phone, "Ready to hear your report...")
+				send_message(phone, "Ready to hear your report:")
 			elif text == "2":
 				send_message(phone, "Hi, how can public safety help you?")
 			else:
@@ -86,7 +86,7 @@ def process_response(request, socketio):
 				db.edit_student_phone(text.lower(), phone)
 				send_message(phone, "Your phone number was successfully added to our database!")
 			else:
-				send_message(phone, "Your phone number is not in our database. Please reply with your valid email in order to register...")
+				send_message(phone, "Your phone number is not in our database. Please reply with your valid email in order to register.")
 	return 1
 # method to check if given email is valid format
 # and check if such email is in our database

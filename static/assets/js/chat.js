@@ -10,6 +10,10 @@ function getCurrentTime(){
 
 $(document).ready(function(){
 
+    if ($('a[href^="/chat/2"]').text() == ""){
+        console.log("Ar arsebobs es chemisa")
+    }
+
 	var form = $( 'form' ).on( 'submit', function(e) {
     	e.preventDefault();
     	var message = $("input[name=message]").val()
@@ -33,10 +37,22 @@ $(document).ready(function(){
     socket.on( 'message_received', function( data ){
         // CHECK if user exists, chat open, chat closed
         let student_messages = $('a[href^="/chat/'+data.student_id+'"]')
-        $('#student_messages').prepend(student_messages) // Prepend user messages on top of the list
-        student_messages.find("div > p > span#messages-id-"+data.student_id).text(data.message)
-        let unread_count = student_messages.find("div > p > span > span#unread_count-"+data.student_id)
-        unread_count.html(Number(unread_count.html())+1)
+        if (student_messages.text() == ""){
+            // CASE WHEN STUDENT DOES NOT EXIST IN THE TAB
+            console.log(data)
+        }
+        else if ($("input#student_id").val() == data.student_id) {
+            // CASE WHEN STUDENT EXISTS AND OPEN
+            console.log("Your student message tab is open")
+        }
+        else {
+            // CASE WHEN STUDENT EXISTS BUT NOT OPEN
+            console.log("Your student message tab is not open")
+        }
+        // $('#student_messages').prepend(student_messages) // Prepend user messages on top of the list
+        // student_messages.find("div > p > span#messages-id-"+data.student_id).text(data.message)
+        // let unread_count = student_messages.find("div > p > span > span#unread_count-"+data.student_id)
+        // unread_count.html(Number(unread_count.html())+1)
     })
 
 });
