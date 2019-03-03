@@ -8,13 +8,6 @@ function getCurrentTime(){
     return new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 }
 
-console.log(getCurrentTime())
-
-function formatTime(datetime){
-    // Format datetime here
-
-}
-
 $(document).ready(function(){
 
 	var form = $( 'form' ).on( 'submit', function(e) {
