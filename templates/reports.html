@@ -30,7 +30,7 @@
 			            <div class="card-body">
 		                    <div class="list-group">
 		                    	{% for report in data['reports'] %}
-			                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+			                      <a href="/chat/{{report[0]}}" class="list-group-item list-group-item-action flex-column align-items-start">
 			                        <div class="d-flex w-100 justify-content-between">
 			                          <h5 class="text-bold-600">{{report[1]}} {{report[2]}}</h5>
 			                          <small class="text-muted">{{report[4]}}</small>

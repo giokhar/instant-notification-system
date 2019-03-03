@@ -13,6 +13,8 @@
         </li>
         <li class="{%if request.path=='/mass-message'%}active{% endif %} nav-item"><a href="/mass-message"><i class="la la-envelope"></i><span class="menu-title">Mass Message</span></a>
         </li>
+        <li class="{%if request.path=='/reports'%}active{% endif %} nav-item"><a href="/reports"><i class="la la-file"></i><span class="menu-title">Reports</span></a>
+        </li>
         <li class="{%if request.path.split('/')[1]=='chat'%}active{% endif %} nav-item"><a href="/chat"><i class="la la-comments"></i><span class="menu-title">Chat</span></a>
         </li>
         <li class=" navigation-header"><span>Extra</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Extra"></i>
