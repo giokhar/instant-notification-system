@@ -185,7 +185,7 @@ def get_all_mass_messages():
 	restart_connection()
 
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT * FROM mass_messages ORDER BY time ASC")
+		cursor.execute("SELECT * FROM mass_messages ORDER BY time DESC")
 		result = listify(cursor.fetchall())
 
 	return result
