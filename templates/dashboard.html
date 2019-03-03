@@ -26,27 +26,26 @@
 			            </div>
 			        </div>
 			        <div class="card-content collapse show">
-			            <div class="col-xl-12 col-12">
-           
-		                <div class="card-body pt-0">
-		                  <div class="row mb-1">
-		                    <div class="col-6 col-md-4">
-		                      <h5>Current week</h5>
-		                      <h2 class="danger">$82,124</h2>
-		                    </div>
-		                    <div class="col-6 col-md-4">
-		                      <h5>Previous week</h5>
-		                      <h2 class="text-muted">$52,502</h2>
-		                    </div>
-		                  </div>
-		                  <div class="chartjs">
-		                    <canvas id="thisYearRevenue" width="400" data-values="[25,67,30]" data-timeline='["Mon","Tue", "Wed"]' style="position: absolute;"></canvas>
-		                    <canvas id="lastYearRevenue" width="400"></canvas>
-		                  </div>
-		                </div>
- 
-			        </div>
-			    </div>
+			            <div class="col-xl-8 col-12">
+			                <div class="card-body pt-0">
+			                  <div class="row mb-1">
+			                    <div class="col-6 col-md-4">
+			                      <h5>Total reports of this week</h5>
+			                      <h2 class="danger">{{data['total_reports']}}</h2>
+			                    </div>
+			                    <div class="col-6 col-md-4">
+			                      <h5>Total messages of this week</h5>
+			                      <h2 class="text-muted">{{data['total_messages']}}</h2>
+			                    </div>
+			                  </div>
+			                  <div class="chartjs">
+			                    <canvas id="thisYearRevenue" width="400" data-values="{{data['report_counts']}}" data-timeline="{%for day in data['timeline']%}{{day}},{%endfor%}" style="position: absolute;"></canvas>
+			                    <canvas id="lastYearRevenue" data-values="{{data['non_report_counts']}}" data-timeline="{%for day in data['timeline']%}{{day}},{%endfor%}" width="400"></canvas>
+			                  </div>
+			                </div>
+			        	</div>
+			    	</div>
+				</div>
 			</div>
 		</section>
     </div>

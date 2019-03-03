@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template
 from flask_socketio import SocketIO
 # custom imports
 from helpers.twilio import process_response, send_mass_message, send_chat_message
-from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with, get_students_recent_messages_with_unread_count, edit_unread_count, get_students_recent_messages_with_unread_messages, get_all_reports, get_todays_reports, get_all_mass_messages, format_data_floors
+from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with, get_students_recent_messages_with_unread_count, edit_unread_count, get_students_recent_messages_with_unread_messages, get_all_reports, get_todays_reports, get_all_mass_messages, format_data_floors, get_chart_data
 from helpers.custom import format_floor_ids, format_data_times
 
 app = Flask(__name__, static_url_path='/static')
@@ -18,6 +18,20 @@ def render_template_with_dict(template, extra):
 @app.route("/")
 def dashboard_page():
 	data = {}
+	data['timeline']=[]
+	data['report_counts']=[]
+	data['non_report_counts'] = []
+	data['total_reports'] = 0
+	data['total_messages'] = 0
+	reports = get_chart_data(1) # get all report count
+	non_reports = get_chart_data(0) # get all non-report messages
+	for report in reports:
+		data['timeline'].append(report[0]) # append day to the timeline
+		data['report_counts'].append(report[1]) # append appropriate count number
+		data['total_reports'] += int(report[1])
+	for non_report in non_reports:
+		data['non_report_counts'].append(non_report[1]) # append appropriate count number
+		data['total_messages'] += int(non_report[1])
 	return render_template_with_dict('dashboard.html', data)
 
 @app.route("/students")

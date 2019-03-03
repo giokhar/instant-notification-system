@@ -29,13 +29,15 @@
         }
     });
 
+    // USING FOR CHART DATA
+    var report = $("#thisYearRevenue");
+    var non_report = $("#lastYearRevenue");
     Chart.controllers.derivedLine = custom;
     var ctx = document.querySelector("#thisYearRevenue").getContext('2d');
-    var report = $("#thisYearRevenue");
     var thisYearRevenueChart = new Chart(ctx, {
         type: 'derivedLine',
         data: {
-            labels: report.data('timeline'),
+            labels: report.data('timeline').split(",").slice(0, -1),
             datasets: [{
                 data: report.data('values'),
                 borderWidth: 4,
@@ -74,8 +76,8 @@
                 yAxes: [{
                     ticks: {
                         padding: 10,
-                        stepSize: 20,
-                        max: Math.max(...report.data('values'))+10,
+                        stepSize: 1,
+                        max: Math.max(...non_report.data('values'))+1,
                         min: 0,
                     },
                     gridLines: {
@@ -89,63 +91,63 @@
         }
     });
 
-    // var ctx2 = document.querySelector("#lastYearRevenue").getContext('2d');
-    // var lastYearRevenueChart = new Chart(ctx2, {
-    //     type: 'line',
-    //     data: {
-    //         labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon"],
-    //         datasets: [{
-    //             data: [7000, 15000, 6000, 10500, 3000, 11500, 4000, 10000],
-    //             borderWidth: 4,
-    //             borderDash: [8, 4],
-    //             borderColor: '#c3c3c3',
-    //             pointBackgroundColor: "#FFF",
-    //             pointBorderColor: "#c3c3c3",
-    //             pointHoverBackgroundColor: "#FFF",
-    //             pointHoverBorderColor: "#c3c3c3",
-    //             pointRadius: 0,
-    //             pointHoverRadius: 6,
-    //             fill: false,
-    //         }]
-    //     },
-    //     options: {
-    //         responsive: true,
-    //         tooltips: {
-    //             displayColors: false,
-    //             callbacks: {
-    //                 label: function(e, d) {
-    //                     // return '${e.xLabel} : ${e.yLabel}'
-    //                 },
-    //                 title: function() {
-    //                     return;
-    //                 }
-    //             }
-    //         },
-    //         legend: {
-    //             display: false
-    //         },
-    //         scales: {
-    //             xAxes: [{
-    //                 gridLines: {
-    //                     display: false,
-    //                 },
-    //             }],
-    //             yAxes: [{
-    //                 ticks: {
-    //                     padding: 10,
-    //                     stepSize: 5000,
-    //                     max: 20000,
-    //                     min: 0,
-    //                 },
-    //                 gridLines: {
-    //                     display: true,
-    //                     drawBorder: false,
-    //                     zeroLineColor: '#e5e5e5',
-    //                 }
-    //             }]
-    //         }
-    //     }
-    // });
+    var ctx2 = document.querySelector("#lastYearRevenue").getContext('2d');
+    var lastYearRevenueChart = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: report.data('timeline').split(",").slice(0, -1),
+            datasets: [{
+                data: non_report.data('values'),
+                borderWidth: 4,
+                borderDash: [8, 4],
+                borderColor: '#c3c3c3',
+                pointBackgroundColor: "#FFF",
+                pointBorderColor: "#c3c3c3",
+                pointHoverBackgroundColor: "#FFF",
+                pointHoverBorderColor: "#c3c3c3",
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                fill: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            tooltips: {
+                displayColors: false,
+                callbacks: {
+                    label: function(e, d) {
+                        // return '${e.xLabel} : ${e.yLabel}'
+                    },
+                    title: function() {
+                        return;
+                    }
+                }
+            },
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                    },
+                }],
+                yAxes: [{
+                    ticks: {
+                        padding: 10,
+                        stepSize: 1,
+                        max: Math.max(...non_report.data('values'))+1,
+                        min: 0,
+                    },
+                    gridLines: {
+                        display: true,
+                        drawBorder: false,
+                        zeroLineColor: '#e5e5e5',
+                    }
+                }]
+            }
+        }
+    });
 
     // Hit Rate Chart - CharJS Doughnut
     // Chart.defaults.hitRateDoughnut = Chart.defaults.doughnut;
