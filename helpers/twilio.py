@@ -71,9 +71,8 @@ def process_response(request, socketio):
 			elif text == "2":
 				send_message(phone, "Hi, how can public safety help you?")
 			else:
-				message_time = datetime.now()
-				socketio.emit('message_received', {"student_id":student_id, "message":text, "name":db.get_student_name(), "time":message_time})
-				db.insert_to_chat_messages(student_id, text, message_time, is_sender, is_report, is_img)
+				socketio.emit('message_received', {"student_id":student_id, "message":text, "name":db.get_student_name(student_id)})
+				db.insert_to_chat_messages(student_id, text, datetime.now(), is_sender, is_report, is_img)
 				db.edit_unread_count(student_id, opr=1)
 
 			#_____________________________________
