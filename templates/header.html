@@ -28,7 +28,7 @@
                   <li class="scrollable-container media-list w-100 ps-container ps-theme-dark" data-ps-id="a8ba6310-7aaf-a8e0-4842-959ba0002a52">
                     {% if data['unread_students']|length==0 %}&nbsp;&nbsp;No unread messages<br><br>{%endif%}
                     {% for student in data['unread_students'] %}
-                    <a href="/chats/{{student[0]}}">
+                    <a href="/chat/{{student[0]}}">
                       <div class="media">
                         <div class="media-left">
                           <span class="avatar avatar-sm avatar-online rounded-circle">
