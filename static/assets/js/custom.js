@@ -12,7 +12,7 @@ $(document).ready(function(){
     	$("#header-message-count").html(Number($("#header-message-count").html())+1)
     	$("#no-unread-reader").remove()
         $(window).load(function() {
-            $("audio#messages_sound").trigger('play'); // incoming messages sound
+            $("#messages_sound").trigger('play'); // incoming messages sound
         });
     });
 
