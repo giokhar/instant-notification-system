@@ -4,6 +4,7 @@ from flask_socketio import SocketIO
 from helpers.twilio import process_response, send_mass_message, send_chat_message
 from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with, get_students_recent_messages_with_unread_count, edit_unread_count, get_students_recent_messages_with_unread_messages, get_all_reports, get_todays_reports, get_all_mass_messages, format_data_floors, get_chart_data, check_user_credentials
 from helpers.custom import format_floor_ids, format_data_times
+from hashlib import md5
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'NO_SECRET_KEY'
@@ -22,7 +23,8 @@ def login():
 	username = request.form.get('username')
 	password = request.form.get('password')
 	if username and password:
-		if check_user_credentials(username, password) != None:
+		pass_hash = md5(password.encode('utf8')).hexdigest()
+		if check_user_credentials(username.strip(), pass_hash.strip()) != None:
 			session['username'] = username
 			return redirect('/')
 		error = '<div class="alert alert-danger mb-2" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><strong>Oh snap!</strong> Username or password is incorrect</div>'
@@ -144,5 +146,4 @@ def listener():
 	return str(request)
 
 if __name__ == "__main__":
-    # app.run(debug=True)
-    socketio.run(app)
+    app.run(debug=True)
