@@ -1,9 +1,9 @@
-import json, pymysql, datetime
+import json, pymysql, datetime, os
 
 connection = None #initial value.updated in restart_connection()
 # Get Configuration file keys.json and store values in the variable 'keys'
 try:keys = json.loads(open('helpers/keys.json').read())
-except:raise FileNotFoundError("Configuration file keys.json not found, contact the owner to get access!")
+except: keys = os.environ
 
 #Is run in every function in this file,
 #to avoid the connection timeout 

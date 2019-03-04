@@ -1,11 +1,11 @@
-import json, re, requests
+import json, re, requests, os
 from twilio.rest import Client
 import helpers.database as db
 from datetime import datetime
 
 # Get Configuration file keys.json and store values in the variable 'keys'
 try:keys = json.loads(open('helpers/keys.json').read())
-except:raise FileNotFoundError("Configuration file keys.json not found, contact the owner to get access!")
+except: keys = os.environ
 
 def create_client():
 	account_sid = keys['account_sid']
