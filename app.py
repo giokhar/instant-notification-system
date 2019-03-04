@@ -67,6 +67,7 @@ def student_data_page():
 def register_student_page():
 	if 'username' in session:
 		data = {}
+		data['audience'] = get_audience_names()
 		return render_template_with_dict('register_student.html', data)
 	return redirect('/login')
 

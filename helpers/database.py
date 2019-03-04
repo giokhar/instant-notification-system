@@ -105,7 +105,7 @@ def get_alert_names():
 	return result
 
 #Returns a list of [(aud, halls.name, [(floors.id, floor.name),...]),...]
-def get_audience_names(only_floors=False):
+def get_audience_names():
 	restart_connection()
 
 	list_audience = []
@@ -114,10 +114,7 @@ def get_audience_names(only_floors=False):
 		aud = next_hall[0]
 		hall_name = next_hall[1]
 		floors = get_floor_names(next_hall[2])
-		if only_floors:
-			list_audience.append(floors)
-		else:
-			list_audience.append((aud, hall_name, floors))
+		list_audience.append((aud, hall_name, floors))
 
 	return list_audience
 
