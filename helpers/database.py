@@ -244,7 +244,7 @@ def get_todays_reports():
 	restart_connection()
 
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT students.id, students.first, students.last, chat_messages.message, chat_messages.time FROM students INNER JOIN chat_messages ON students.id=chat_messages.student_id WHERE chat_messages.is_report=1 AND CONVERT(chat_messages.time, DATE)=DATE("+str(datetime.date.today())+") ORDER BY time DESC")
+		cursor.execute("SELECT students.id, students.first, students.last, chat_messages.message, chat_messages.time FROM students INNER JOIN chat_messages ON students.id=chat_messages.student_id WHERE chat_messages.is_report=1 AND CONVERT(chat_messages.time, DATE)=CONVERT('"+str(datetime.datetime.now())+"', DATE) ORDER BY time DESC")
 		result = listify(cursor.fetchall())
 	return result
 
