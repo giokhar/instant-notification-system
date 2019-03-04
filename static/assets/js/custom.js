@@ -12,7 +12,7 @@ $(document).ready(function(){
     	$("#header-message-count").html(Number($("#header-message-count").html())+1)
     	$("#no-unread-reader").remove()
         var sound = new Howl({
-            src: ['https://instant-notification-system.herokuapp.com/static/downloads/audio/iphone_receive_sms.mp3'];
+            src: ['https://instant-notification-system.herokuapp.com/static/downloads/audio/iphone_receive_sms.mp3']
         });
         sound.play();
     });
