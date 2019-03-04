@@ -6,7 +6,7 @@ from datetime import datetime
 # Get Configuration file keys.json and store values in the variable 'keys'
 try:keys = json.loads(open('helpers/keys.json').read())
 except: keys = os.environ
-print(keys)
+
 def create_client():
 	account_sid = keys['account_sid']
 	auth_token = keys['auth_token']
