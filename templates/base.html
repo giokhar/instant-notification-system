@@ -28,6 +28,11 @@
     <!-- END Custom CSS-->
   </head>
   <body class="vertical-layout vertical-menu-modern {%block body_template%}{%endblock%}" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+    <!-- Load sounds first -->
+    <audio id="messages_sound" src="{{ url_for('static', filename='downloads/audio/iphone_text.mp3') }}" preload="auto"></audio>
+    <audio id="notif_sound" src="{{ url_for('static', filename='downloads/audio/iphone_text_tone.mp3') }}" preload="auto"></audio>
+    <audio id="send_sound" src="{{ url_for('static', filename='downloads/audio/iphone_send_sms.mp3') }}" preload="auto"></audio>
+    <audio id="receive_sound" src="{{ url_for('static', filename='downloads/audio/iphone_receive_sms.mp3') }}" preload="auto"></audio>
 
     <!-- fixed-top-->
     {% include 'header.html' %}
@@ -43,10 +48,6 @@
     <div class="app-content content">
       {%block content%}{%endblock%}
     </div>
-    <audio id="messages_sound" src="{{ url_for('static', filename='downloads/audio/iphone_text.mp3') }}" preload="auto"></audio><!-- 
-    <audio id="notif_sound" src="{{ url_for('static', filename='downloads/audio/iphone_text_tone.mp3') }}" preload="auto"></audio>
-    <audio id="send_sound" src="{{ url_for('static', filename='downloads/audio/iphone_send_sms.mp3') }}" preload="auto"></audio>
-    <audio id="receive_sound" src="{{ url_for('static', filename='downloads/audio/iphone_receive_sms.mp3') }}" preload="auto"></audio> -->
     <!-- ////////////////////////////////////////////////////////////////////////////-->
 
     <!-- {% include 'footer.html' %} -->
