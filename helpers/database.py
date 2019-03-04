@@ -34,6 +34,14 @@ def listify(tpl):
 		result.append(list(next))
 	return result
 
+#CHECK USER CREDENTIALS
+def check_user_credentials(username, password_hash):
+	restart_connection()
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT id FROM users WHERE username=%s AND password=%s", (username,password_hash,))
+		result = cursor.fetchone()
+	return result
+
 # HELPER FUNCTION
 # return a formated floors 
 # using get_floor_names_by_floor_ids
