@@ -43,7 +43,10 @@
     <div class="app-content content">
       {%block content%}{%endblock%}
     </div>
-    <audio id="xyz" src="{{ url_for('static', filename='downloads/audio/iphone_text.mp3') }}" preload="auto"></audio>
+    <audio id="messages_sound" src="{{ url_for('static', filename='downloads/audio/iphone_text.mp3') }}" preload="auto"></audio>
+    <audio id="notif_sound" src="{{ url_for('static', filename='downloads/audio/iphone_text_tone.mp3') }}" preload="auto"></audio>
+    <audio id="send_sound" src="{{ url_for('static', filename='downloads/audio/iphone_send_sms.mp3') }}" preload="auto"></audio>
+    <audio id="receive_sound" src="{{ url_for('static', filename='downloads/audio/iphone_receive_sms.mp3') }}" preload="auto"></audio>
     <!-- ////////////////////////////////////////////////////////////////////////////-->
 
     <!-- {% include 'footer.html' %} -->
