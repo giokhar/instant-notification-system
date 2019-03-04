@@ -18,7 +18,7 @@ $(document).ready(function(){
     	$("#header-reports").prepend('<a href="/chat/'+data.student_id+'"><div class="media"><div class="media-left align-self-center"><i class="ft-file icon-bg-circle bg-danger"></i></div><div class="media-body"><h6 class="media-heading red darken-1">'+data.name+'</h6><p class="notification-text font-small-3 text-muted">'+data.message+'</p><small><time class="media-meta text-muted">'+getCurrentTime()+'</time></small></div></div></a>')
     	$("#header-report-count").html(Number($("#header-report-count").html())+1)
     	$("#no-reports").remove()
-        $("#notif_sound").trigger('play'); // notification sound
+        // $("#notif_sound").trigger('play'); // notification sound
     });
 
 });

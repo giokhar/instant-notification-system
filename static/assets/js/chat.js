@@ -28,7 +28,7 @@ $(document).ready(function(){
         $('#student_messages').prepend(student_messages) // Prepend user messages on top of the list
         student_messages.find("div > p > span#messages-id-"+data.student_id).text(data.message)
         student_messages.find("div > h6 > span# message-time-"+data.student_id).text(data.time)
-        $("#send_sound").trigger('play'); // send message sound
+        // $("#send_sound").trigger('play'); // send message sound
     })
 
     socket.on( 'message_received', function( data ){
@@ -55,7 +55,7 @@ $(document).ready(function(){
                 $('.chats').append('<div class="chat chat-left"><div class="chat-body">'+img_or_message+'</div></div>') // add message on the left side of that chatroom
             }else {$('.chats').append('<div class="chat chat-left"><div class="chat-body">'+img_or_message+'</div></div>')}
             $('.chat-app-window').scrollTop(Number.MAX_SAFE_INTEGER) // Always scroll down when message sent
-            setTimeout(function(){$("#receive_sound").trigger('play');}, 1000);
+            // setTimeout(function(){$("#receive_sound").trigger('play');}, 1000);
         }
         else {
             // CASE WHEN STUDENT EXISTS BUT NOT OPEN
