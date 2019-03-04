@@ -11,11 +11,8 @@ socketio = SocketIO(app)
 def render_template_with_dict(template, extra):
 	"""Helper function to render a template using some common variables"""
 	common_dict = {}
-	import datetime
-	print(datetime.date.today())
 	common_dict['unread_students'] = format_data_times(get_students_recent_messages_with_unread_messages())
 	common_dict['today_reports'] = format_data_times(get_todays_reports(), time_index=4)
-	print(common_dict['today_reports'])
 	return render_template(template, data={**common_dict, **extra})
 
 @app.route("/")
