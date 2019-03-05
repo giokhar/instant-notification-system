@@ -34,7 +34,8 @@ def send_chat_message(student_id, text):
 def send_message(receiver, text):
 	client = create_client()
 	sender = keys['phone_number']
-	message = client.messages.create(from_=sender, body=text, to=receiver)
+	if receiver:
+		message = client.messages.create(from_=sender, body=text, to=receiver)
 	return message
 
 def process_image(request, filename, student_id):
