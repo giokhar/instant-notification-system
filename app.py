@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template, session
 from flask_socketio import SocketIO
 # custom imports
 from helpers.twilio import process_response, send_mass_message, send_chat_message
-from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with, get_students_recent_messages_with_unread_count, edit_unread_count, get_students_recent_messages_with_unread_messages, get_all_reports, get_todays_reports, get_all_mass_messages, format_data_floors, get_chart_data, check_user_credentials
+from helpers.database import get_all_students, get_alert_names, get_alert_template, get_audience_names, get_last_read_student_id, get_all_chat_messages_with, get_students_recent_messages_with_unread_count, edit_unread_count, get_students_recent_messages_with_unread_messages, get_all_reports, get_todays_reports, get_all_mass_messages, format_data_floors, get_chart_data, check_user_credentials, register_student
 from helpers.custom import format_floor_ids, format_data_times
 from hashlib import md5
 
@@ -63,7 +63,7 @@ def student_data_page():
 		data['students'] = get_all_students()
 		return render_template_with_dict('students.html', data)
 
-@app.route("/register-student")
+@app.route("/register-student", methods=['GET', 'POST'])
 def register_student_page():
 	if 'username' in session:
 		data = {}
@@ -75,8 +75,8 @@ def register_student_page():
 		phone = request.form.get('phone')
 		floor_id = request.form.get('floor_id')
 		if first and last and email and phone and floor_id:
-			print("halo")
-
+			register_student(first, last, email, floor_id, phone)
+			return redirect('/students')
 		return render_template_with_dict('register_student.html', data)
 	return redirect('/login')
 
