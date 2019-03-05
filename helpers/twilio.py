@@ -100,6 +100,7 @@ def process_response(request, socketio):
 # and check if such email is in our database
 def is_valid_email(email): 
 	pattern = "^.+@(\[?)[a-zA-Z0-9-.]+.([a-zA-Z]{2,3}|[0-9]{1,3})(]?)$"
+	print(email)
 	email = email.strip()
 	print(re.match(pattern, email) != None)
 	print(db.if_email_exists(email))
