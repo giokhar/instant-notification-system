@@ -68,6 +68,15 @@ def register_student_page():
 	if 'username' in session:
 		data = {}
 		data['audience'] = get_audience_names()
+		error = ""
+		first = request.form.get('first')
+		last = request.form.get('last')
+		email = request.form.get('email')
+		phone = request.form.get('phone')
+		floor_id = request.form.get('floor_id')
+		if first and last and email and phone and floor_id:
+			print("halo")
+
 		return render_template_with_dict('register_student.html', data)
 	return redirect('/login')
 

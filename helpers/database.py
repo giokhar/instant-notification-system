@@ -179,9 +179,9 @@ def get_student_id(phone):
 
 	with connection.cursor() as cursor:
 		cursor.execute("SELECT id FROM students WHERE phone=%s", (phone,))
-		phone = cursor.fetchone()[0] #This returns a tuple and we pick the first element.
+		id = cursor.fetchone()[0] #This returns a tuple and we pick the first element.
 
-	return phone
+	return id
 
 
 #returns a list of tuples containing message, is_sender,time  associated with a given student_id.
@@ -297,7 +297,16 @@ def register_student(first, last, email, floor_id, phone):
 		format_strings = ','.join(['%s'] * 5) #argc == 5
 
 		cursor.execute("INSERT INTO students (first, last, email, floor_id, phone) VALUES (%s)" % format_strings, (first, last, email, floor_id, phone))
+	connection.commit()
+	student_id = get_student_id(phone)
+	insert_to_chats(student_id)
 
+# HELPER when new user is registered
+def insert_to_chats(student_id):
+	restart_connection()
+	with connection.cursor() as cursor:
+		format_strings = ','.join(['%s'] * 2)
+		cursor.execute("INSERT INTO `chats` (`student_id`, `unread_count`) VALUES (%s)" % format_strings, (student_id, 0))
 		connection.commit()
 
 #Inserts the old messages to the mass_messages table.
