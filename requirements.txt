@@ -1,8 +1,10 @@
+asn1crypto==0.24.0
 certifi==2018.11.29
+cffi==1.12.2
 chardet==3.0.4
 Click==7.0
+cryptography==2.6.1
 dnspython==1.16.0
-eventlet==0.24.1
 Flask==1.0.2
 Flask-SocketIO==3.3.1
 greenlet==0.4.15
@@ -12,8 +14,10 @@ itsdangerous==1.1.0
 Jinja2==2.10
 MarkupSafe==1.1.0
 monotonic==1.5
+pycparser==2.19
 PyJWT==1.7.1
 PyMySQL==0.9.3
+pyOpenSSL==19.0.0
 PySocks==1.6.8
 python-engineio==3.4.3
 python-socketio==3.1.2
