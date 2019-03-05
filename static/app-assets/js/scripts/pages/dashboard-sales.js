@@ -32,6 +32,11 @@
     // USING FOR CHART DATA
     var report = $("#thisYearRevenue");
     var non_report = $("#lastYearRevenue");
+    function round(number, increment, offset) {
+        return Math.ceil((number - offset) / increment ) * increment + offset;
+    }
+    var step_size = round(Math.floor(Math.max(...non_report.data('values'))/10), 10, 10)
+    var max_value = round(Math.max(...non_report.data('values')), 10, 10)
     Chart.controllers.derivedLine = custom;
     var ctx = document.querySelector("#thisYearRevenue").getContext('2d');
     var thisYearRevenueChart = new Chart(ctx, {
@@ -76,8 +81,8 @@
                 yAxes: [{
                     ticks: {
                         padding: 10,
-                        stepSize: Math.floor(Math.max(...non_report.data('values'))/10),
-                        max: Math.max(...non_report.data('values'))+1,
+                        stepSize: step_size,
+                        max: max_value,
                         min: 0,
                     },
                     gridLines: {
@@ -135,8 +140,8 @@
                 yAxes: [{
                     ticks: {
                         padding: 10,
-                        stepSize: Math.floor(Math.max(...non_report.data('values'))/10),
-                        max: Math.max(...non_report.data('values'))+1,
+                        stepSize: step_size,
+                        max: max_value,
                         min: 0,
                     },
                     gridLines: {
