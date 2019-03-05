@@ -32,6 +32,7 @@ def send_chat_message(student_id, text):
 
 #Reciever ex: '+12343423523'
 def send_message(receiver, text):
+	message = ""
 	client = create_client()
 	sender = keys['phone_number']
 	if receiver:
