@@ -1,5 +1,5 @@
 var url = 'https://' + document.domain + ':' + location.port;
-var socket = io.connect(url, { transports: ['websocket', 'xhr-polling', 'htmlfile'] });
+var socket = io.connect(url, { transports: ['websocket', 'polling'] });
 
 function getCurrentTime(){
     return new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
