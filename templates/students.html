@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Students{% endblock %}
 {% block import_styles %}
+<link rel="stylesheet" type="text/css" href="static/app-assets/css/core/colors/palette-tooltip.css">
 <link rel="stylesheet" type="text/css" href="static/app-assets/vendors/css/tables/datatable/datatables.min.css">
 {% endblock %}
 {% block body_template %}2-columns menu-expanded fixed-navbar{% endblock %}
@@ -46,12 +47,12 @@
                       <tbody>
                       	{% for student in data['students'] %}
                         <tr>
-                          <td>{{ student[0].capitalize() }}</td>
                           <td>{{ student[1].capitalize() }}</td>
                           <td>{{ student[2].capitalize() }}</td>
-                          <td>{{ student[3] }}, {{ student[4] }}</td>
-                          <td>{{ student[5] }}</td>
-                          <td>edit/message</td>
+                          <td>{{ student[3].capitalize() }}</td>
+                          <td>{{ student[4] }}, {{ student[5] }}</td>
+                          <td>{{ student[6] }}</td>
+                          <td><a href="/chat/{{student[0]}}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Send a message"><i class="la la-paper-plane"></i></a></td>
                         </tr>
                         {% endfor %}
                       </tbody>
@@ -78,4 +79,5 @@
 {% block import_scripts %}
 <script src="static/app-assets/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
 <script src="static/app-assets/js/scripts/tables/datatables/datatable-basic.js" type="text/javascript"></script>
+<script src="static/app-assets/js/scripts/tooltip/tooltip.js" type="text/javascript"></script>
 {% endblock %}

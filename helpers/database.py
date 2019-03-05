@@ -80,7 +80,7 @@ def get_all_students():
 	restart_connection()
 
 	with connection.cursor() as cursor:
-		cursor.execute("SELECT students.first, students.last, students.email, halls.name, floors.name, students.phone FROM students INNER JOIN floors ON students.floor_id=floors.id INNER JOIN halls ON halls.id=floors.hall_id")
+		cursor.execute("SELECT students.id, students.first, students.last, students.email, halls.name, floors.name, students.phone FROM students INNER JOIN floors ON students.floor_id=floors.id INNER JOIN halls ON halls.id=floors.hall_id")
 		result = cursor.fetchall()
 	return result
 

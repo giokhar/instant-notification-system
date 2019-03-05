@@ -74,7 +74,7 @@ def register_student_page():
 		email = request.form.get('email')
 		phone = request.form.get('phone')
 		floor_id = request.form.get('floor_id')
-		if first and last and email and phone and floor_id:
+		if first and last and email and floor_id:
 			register_student(first, last, email, floor_id, phone)
 			return redirect('/students')
 		return render_template_with_dict('register_student.html', data)
