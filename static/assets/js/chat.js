@@ -1,5 +1,5 @@
 var url = 'https://' + document.domain + ':' + location.port;
-var socket = io.connect(url, { transports: ['websocket'] });
+var socket = io.connect(url, { transports: ['websocket', 'xhr-polling', 'htmlfile'] });
 
 $('.chat-app-window').scrollTop(Number.MAX_SAFE_INTEGER) // Default window scroll-down
 $("input[name=message]").focus()
