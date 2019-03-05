@@ -42,6 +42,14 @@ def check_user_credentials(username, pass_hash):
 		result = cursor.fetchone()
 	return result
 
+# GET CONTENT OF ABOUT US
+def get_about_us():
+	restart_connection()
+	with connection.cursor() as cursor:
+		cursor.execute("SELECT name, content FROM static WHERE id=1")
+		result = cursor.fetchone()
+	return result
+
 # HELPER FUNCTION
 # return a formated floors 
 # using get_floor_names_by_floor_ids
