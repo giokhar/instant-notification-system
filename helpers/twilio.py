@@ -90,7 +90,7 @@ def process_response(request, socketio):
 		except:
 			# In this case, user sent something but this phone number does not exist in the database
 			# ASK USER TO REGISTER
-			if is_valid_email():
+			if is_valid_email(text):
 				db.edit_student_phone(text.lower(), phone)
 				send_message(phone, "Your phone number was successfully added to our database!")
 			else:
