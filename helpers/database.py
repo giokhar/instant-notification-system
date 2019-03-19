@@ -302,11 +302,14 @@ def register_student(first, last, email, floor_id, phone):
 	restart_connection()
 
 	with connection.cursor() as cursor:
-		format_strings = ','.join(['%s'] * 5) #argc == 5
+		cursor.execute("SELECT MAX(id)+1 FROM students")
+		student_id = cursor.fetchone()[0]
 
-		cursor.execute("INSERT INTO students (first, last, email, floor_id, phone) VALUES (%s)" % format_strings, (first, last, email, floor_id, phone))
+	with connection.cursor() as cursor:
+		format_strings = ','.join(['%s'] * 6) #argc == 6
+
+		cursor.execute("INSERT INTO students (id, first, last, email, floor_id, phone) VALUES (%s)" % format_strings, (student_id, first, last, email, floor_id, phone))
 	connection.commit()
-	student_id = get_student_id(phone)
 	insert_to_chats(student_id)
 
 # HELPER when new user is registered
