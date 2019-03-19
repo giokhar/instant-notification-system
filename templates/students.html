@@ -52,7 +52,7 @@
                           <td>{{ student[3].capitalize() }}</td>
                           <td>{{ student[4] }}, {{ student[5] }}</td>
                           <td>{{ student[6] }}</td>
-                          <td><a href="{%if not student[6]: %}#{% else: %}/chat/{{student[0]}}{% endif %}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Send a message"><i class="la la-paper-plane"></i></a></td>
+                          <td><a href="{%if not student[6]: %}#{% else %}/chat/{{student[0]}}{% endif %}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Send a message"><i class="la la-paper-plane"></i></a></td>
                         </tr>
                         {% endfor %}
                       </tbody>
